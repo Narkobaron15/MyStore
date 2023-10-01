@@ -1,3 +1,5 @@
+using Microsoft.Extensions.FileProviders;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -7,7 +9,24 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddCors();
+
 var app = builder.Build();
+
+app.UseCors(x =>
+        x.AllowAnyHeader()
+        .AllowAnyOrigin()
+        .AllowAnyMethod()
+);
+
+var path = Path.Combine(Directory.GetCurrentDirectory(), "Uploads");
+if (!Directory.Exists(path)) Directory.CreateDirectory(path);
+
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(path),
+    RequestPath = "/api/images",
+});
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
