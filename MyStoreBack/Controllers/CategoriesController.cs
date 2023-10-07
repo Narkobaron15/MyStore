@@ -24,16 +24,18 @@ public class CategoriesController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IEnumerable<CategoryModel>> GetCategories()
+    public async Task<IActionResult> GetCategories()
     {
         var categories = await Ctx.Categories.ToListAsync();
-        return Mapper.Map<IEnumerable<CategoryModel>>(categories);
+        var mapped = Mapper.Map<IEnumerable<CategoryModel>>(categories);
+        return Ok(mapped);
     }
 
     [HttpGet("{id:int}")]
-    public async Task<CategoryModel> GetCategoryById(int id)
+    public async Task<IActionResult> GetCategoryById(int id)
     {
         var cat = await Ctx.Categories.FindAsync(id);
-        return Mapper.Map<CategoryModel>(cat);
+        var mapped = Mapper.Map<CategoryModel>(cat);
+        return Ok(mapped);
     }
 }

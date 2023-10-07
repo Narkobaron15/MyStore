@@ -8,80 +8,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4c8cf88c-225e-435a-b473-f3bfcd89e7ac" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Controllers/CategoriesController.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Data/Context/StoreDbContext.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Data/Entity/Base/BaseEntity.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Data/Entity/Base/IEntity.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Data/Entity/CategoryEntity.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Data/Seeder/DbSeeder.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Mapper/MapperProfile.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Migrations/20231007081421_Initial.Designer.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Migrations/20231007081421_Initial.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Migrations/20231007081931_Changed name of Categories table.Designer.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Migrations/20231007081931_Changed name of Categories table.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Migrations/20231007084054_Changed ImageUrl property name.Designer.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Migrations/20231007084054_Changed ImageUrl property name.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Migrations/StoreDbContextModelSnapshot.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Models/CategoryModel.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Uploads/1.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Uploads/2.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/Debug/net6.0/AutoMapper.Extensions.Microsoft.DependencyInjection.dll" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/Debug/net6.0/AutoMapper.dll" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/Debug/net6.0/Humanizer.dll" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/Debug/net6.0/Microsoft.EntityFrameworkCore.Abstractions.dll" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/Debug/net6.0/Microsoft.EntityFrameworkCore.Design.dll" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/Debug/net6.0/Microsoft.EntityFrameworkCore.Relational.dll" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/Debug/net6.0/Microsoft.EntityFrameworkCore.dll" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/Debug/net6.0/Npgsql.EntityFrameworkCore.PostgreSQL.dll" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/Debug/net6.0/Npgsql.dll" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/obj/Debug/net6.0/staticwebassets/msbuild.build.MyStoreBack.props" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/obj/Debug/net6.0/staticwebassets/msbuild.buildMultiTargeting.MyStoreBack.props" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/obj/Debug/net6.0/staticwebassets/msbuild.buildTransitive.MyStoreBack.props" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/obj/MyStoreBack.csproj.EntityFrameworkCore.targets" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../MyStoreClient/.idea/codeStyles/Project.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../MyStoreClient/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../MyStoreClient/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../MyStoreClient/app/src/main/java/com/example/mystore/application/HomeApplication.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../MyStoreClient/app/src/main/java/com/example/mystore/models/CategoryModel.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../MyStoreClient/app/src/main/java/com/example/mystore/queries/ApiQueries.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../MyStoreClient/app/src/main/res/xml/network_security_config.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.MyStoreBack/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.MyStoreBack/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Controllers/WeatherForecastController.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/MyStoreBack.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/MyStoreBack.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/appsettings.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/Debug/net6.0/MyStoreBack.deps.json" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Debug/net6.0/MyStoreBack.deps.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/Debug/net6.0/MyStoreBack.dll" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Debug/net6.0/MyStoreBack.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/Debug/net6.0/MyStoreBack.exe" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Debug/net6.0/MyStoreBack.exe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/Debug/net6.0/MyStoreBack.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Debug/net6.0/MyStoreBack.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/Debug/net6.0/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Debug/net6.0/appsettings.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/Debug/net6.0/.NETCoreApp,Version=v6.0.AssemblyAttributes.cs" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net6.0/.NETCoreApp,Version=v6.0.AssemblyAttributes.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/Debug/net6.0/MyStoreBack.GeneratedMSBuildEditorConfig.editorconfig" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net6.0/MyStoreBack.GeneratedMSBuildEditorConfig.editorconfig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/Debug/net6.0/MyStoreBack.assets.cache" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net6.0/MyStoreBack.assets.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/Debug/net6.0/MyStoreBack.csproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net6.0/MyStoreBack.csproj.AssemblyReference.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/Debug/net6.0/MyStoreBack.csproj.CoreCompileInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net6.0/MyStoreBack.csproj.CoreCompileInputs.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/Debug/net6.0/MyStoreBack.csproj.FileListAbsolute.txt" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net6.0/MyStoreBack.csproj.FileListAbsolute.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/Debug/net6.0/MyStoreBack.dll" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net6.0/MyStoreBack.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/Debug/net6.0/MyStoreBack.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net6.0/MyStoreBack.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/Debug/net6.0/apphost.exe" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net6.0/apphost.exe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/Debug/net6.0/ref/MyStoreBack.dll" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net6.0/ref/MyStoreBack.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/Debug/net6.0/refint/MyStoreBack.dll" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net6.0/refint/MyStoreBack.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/MyStoreBack.csproj.nuget.dgspec.json" beforeDir="false" afterPath="$PROJECT_DIR$/obj/MyStoreBack.csproj.nuget.dgspec.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/MyStoreBack.csproj.nuget.g.props" beforeDir="false" afterPath="$PROJECT_DIR$/obj/MyStoreBack.csproj.nuget.g.props" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/project.assets.json" beforeDir="false" afterPath="$PROJECT_DIR$/obj/project.assets.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/project.nuget.cache" beforeDir="false" afterPath="$PROJECT_DIR$/obj/project.nuget.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/project.packagespec.json" beforeDir="false" afterPath="$PROJECT_DIR$/obj/project.packagespec.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/rider.project.model.nuget.info" beforeDir="false" afterPath="$PROJECT_DIR$/obj/rider.project.model.nuget.info" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/rider.project.restore.info" beforeDir="false" afterPath="$PROJECT_DIR$/obj/rider.project.restore.info" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/staticwebassets.pack.sentinel" beforeDir="false" afterPath="$PROJECT_DIR$/obj/staticwebassets.pack.sentinel" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MyStoreClient/.idea/deploymentTargetDropDown.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../MyStoreClient/.idea/deploymentTargetDropDown.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MyStoreClient/app/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/../MyStoreClient/app/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MyStoreClient/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../MyStoreClient/app/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MyStoreClient/app/src/main/java/com/example/mystore/MainActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../MyStoreClient/app/src/main/java/com/example/mystore/MainActivity.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MyStoreClient/app/src/main/res/layout/activity_main.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../MyStoreClient/app/src/main/res/layout/activity_main.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MyStoreClient/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../MyStoreClient/app/src/main/res/values/strings.xml" afterDir="false" />
-    </list>
+    <list default="true" id="4c8cf88c-225e-435a-b473-f3bfcd89e7ac" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -202,7 +129,7 @@
       <workItem from="1696662446816" duration="639000" />
       <workItem from="1696663115419" duration="313000" />
       <workItem from="1696663446581" duration="7443000" />
-      <workItem from="1696671431075" duration="1226000" />
+      <workItem from="1696671431075" duration="1538000" />
     </task>
     <servers />
   </component>
