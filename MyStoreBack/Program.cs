@@ -1,4 +1,8 @@
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
+using MyStoreBack.Data.Context;
+using MyStoreBack.Data.Seeder;
+using MyStoreBack.Mapper;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +15,13 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddCors();
 
+builder.Services.AddAutoMapper(typeof(MapperProfile));
+
+builder.Services.AddDbContext<StoreDbContext>(opts =>
+{
+    opts.UseNpgsql(builder.Configuration.GetConnectionString("WebStoreConnection"));
+});
+
 var app = builder.Build();
 
 app.UseCors(policyBuilder => policyBuilder
@@ -18,6 +29,8 @@ app.UseCors(policyBuilder => policyBuilder
     .AllowAnyOrigin()
     .AllowAnyMethod()
 );
+
+app.SeedDatabase();
 
 var path = Path.Combine(Directory.GetCurrentDirectory(), "Uploads");
 if (!Directory.Exists(path)) Directory.CreateDirectory(path);
