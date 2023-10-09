@@ -8,7 +8,22 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4c8cf88c-225e-435a-b473-f3bfcd89e7ac" name="Changes" comment="" />
+    <list default="true" id="4c8cf88c-225e-435a-b473-f3bfcd89e7ac" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/../MyStoreClient/app/src/main/java/com/example/mystore/queries/ApiCommon.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MyStoreClient/app/src/main/java/com/example/mystore/queries/RetrofitClient.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.MyStoreBack/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.MyStoreBack/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/Debug/net6.0/MyStoreBack.dll" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Debug/net6.0/MyStoreBack.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/Debug/net6.0/MyStoreBack.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Debug/net6.0/MyStoreBack.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obj/Debug/net6.0/MyStoreBack.dll" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net6.0/MyStoreBack.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obj/Debug/net6.0/MyStoreBack.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net6.0/MyStoreBack.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obj/Debug/net6.0/ref/MyStoreBack.dll" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net6.0/ref/MyStoreBack.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obj/Debug/net6.0/refint/MyStoreBack.dll" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net6.0/refint/MyStoreBack.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MyStoreClient/.idea/deploymentTargetDropDown.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../MyStoreClient/.idea/deploymentTargetDropDown.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MyStoreClient/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../MyStoreClient/app/src/main/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MyStoreClient/app/src/main/java/com/example/mystore/MainActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../MyStoreClient/app/src/main/java/com/example/mystore/MainActivity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MyStoreClient/app/src/main/java/com/example/mystore/models/CategoryModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../MyStoreClient/app/src/main/java/com/example/mystore/models/CategoryModel.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MyStoreClient/app/src/main/java/com/example/mystore/queries/ApiQueries.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../MyStoreClient/app/src/main/java/com/example/mystore/queries/ApiQueries.kt" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -129,7 +144,7 @@
       <workItem from="1696662446816" duration="639000" />
       <workItem from="1696663115419" duration="313000" />
       <workItem from="1696663446581" duration="7443000" />
-      <workItem from="1696671431075" duration="1538000" />
+      <workItem from="1696671431075" duration="2288000" />
     </task>
     <servers />
   </component>
