@@ -10,7 +10,7 @@
         android:id="@+id/custom_view"
         android:layout_height="match_parent"
         android:layout_width="match_parent"
-        android:paddingHorizontal="7dp"
+        android:paddingHorizontal="15dp"
         android:paddingVertical="17dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
