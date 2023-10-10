@@ -2,12 +2,17 @@ package com.example.mystore
 
 import android.os.Bundle
 import android.widget.ImageView
+import android.widget.ListView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.mystore.adapters.CustomAdapter
 import com.example.mystore.model.CategoryModel
 import com.example.mystore.retrofit.ApiCommon
 import com.squareup.picasso.Picasso
-
-// https://habr.com/ru/articles/520544/
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.await
 
 class MainActivity : AppCompatActivity() {
     companion object {
@@ -18,27 +23,19 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val imageView = findViewById<ImageView>(R.id.picPlaceholder)
-
-        Picasso.get().load(imageUrl).into(imageView)
-//        Glide.with(HomeApplication.getAppContext()).load(imageUrl).into(imageView)
-
-        ApiCommon.service.getCategories().enqueue(object : retrofit2.Callback<MutableList<CategoryModel>> {
+        ApiCommon.service.getCategories().enqueue(object : Callback<MutableList<CategoryModel>> {
             override fun onResponse(
-                call: retrofit2.Call<MutableList<CategoryModel>>,
-                response: retrofit2.Response<MutableList<CategoryModel>>
+                call: Call<MutableList<CategoryModel>>,
+                response: Response<MutableList<CategoryModel>>
             ) {
                 val categories = response.body()
-
-                if (categories != null) {
-                    for (category in categories) {
-                        println(category.name)
-                    }
-                }
+                val listView = findViewById<ListView>(R.id.custom_view)
+                val adapter = CustomAdapter(this@MainActivity, categories ?: listOf())
+                listView.adapter = adapter
             }
 
-            override fun onFailure(call: retrofit2.Call<MutableList<CategoryModel>>, t: Throwable) {
-                println(t.message)
+            override fun onFailure(call: Call<MutableList<CategoryModel>>, t: Throwable) {
+                Toast.makeText(this@MainActivity, t.message, Toast.LENGTH_LONG).show()
             }
         })
     }
