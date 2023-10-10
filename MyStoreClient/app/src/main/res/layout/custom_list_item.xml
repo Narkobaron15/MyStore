@@ -12,6 +12,7 @@
         android:paddingVertical="10dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
+        android:contentDescription="Picture of a category"
         android:layout_height="100dp" />
 
     <TextView android:id="@+id/header"
