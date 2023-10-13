@@ -6,7 +6,7 @@ namespace MyStoreBack.Data.Seeder;
 
 public static class DbSeeder
 {
-    public static async void SeedDatabase(this IApplicationBuilder builder)
+    public static async Task SeedDatabase(this IApplicationBuilder builder)
     {
         using var scope = builder.ApplicationServices.CreateScope();
         var ctx = scope.ServiceProvider.GetRequiredService<StoreDbContext>();
@@ -14,7 +14,7 @@ public static class DbSeeder
         await MigrateIfAnyIn(ctx);
 
         if (!await ctx.Categories.AnyAsync())
-            SeedCategoriesInto(ctx);
+            await SeedCategoriesInto(ctx);
     }
 
     private static async Task MigrateIfAnyIn(DbContext ctx)
@@ -23,7 +23,7 @@ public static class DbSeeder
             await ctx.Database.MigrateAsync();
     }
 
-    private static async void SeedCategoriesInto(DbContext ctx)
+    private static async Task SeedCategoriesInto(DbContext ctx)
     {
         var categories = new List<CategoryEntity>
         {

@@ -30,7 +30,7 @@ app.UseCors(policyBuilder => policyBuilder
     .AllowAnyMethod()
 );
 
-app.SeedDatabase();
+await app.SeedDatabase();
 
 var path = Path.Combine(Directory.GetCurrentDirectory(), "Uploads");
 if (!Directory.Exists(path)) Directory.CreateDirectory(path);
