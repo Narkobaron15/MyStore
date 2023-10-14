@@ -12,5 +12,8 @@ public class MapperProfile : AutoMapper.Profile
 
         CreateMap<CategoryModel, CategoryEntity>()
             .ForMember(x => x.ImageUrl, opt => opt.MapFrom(src => src.Image));
+
+        CreateMap<CategoryCreateModel, CategoryEntity>();
+        CreateMap<CategoryUpdateModel, CategoryEntity>();
     }
 }

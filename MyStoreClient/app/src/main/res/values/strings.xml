@@ -1,4 +1,10 @@
 <resources>
     <string name="app_name">MyStore</string>
-    <string name="hello_cossacks">Hello cossacks 🙃💅</string>
+    <string name="add_cat">Add a category</string>
+    <string name="labelName">Name</string>
+    <string name="labelImage">Image URL</string>
+    <string name="labelDescription">Description</string>
+    <string name="add">Add</string>
+    <string name="required">Required</string>
+    <string name="categoryitem_picdescription">Picture of a category</string>
 </resources>

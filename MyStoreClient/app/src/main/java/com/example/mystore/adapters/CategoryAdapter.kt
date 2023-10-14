@@ -7,12 +7,12 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mystore.R
-import com.example.mystore.model.CategoryModel
+import com.example.mystore.models.CategoryModel
 import com.squareup.picasso.Picasso
 
-class CustomAdapter(
+class CategoryAdapter(
     private val data: List<CategoryModel>
-) : RecyclerView.Adapter<CustomAdapter.ItemViewHolder>() {
+) : RecyclerView.Adapter<CategoryAdapter.ItemViewHolder>() {
 
     class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val image: ImageView?
@@ -29,14 +29,17 @@ class CustomAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
         val view: View = LayoutInflater.from(parent.context)
-                .inflate(R.layout.custom_list_layout, parent, false)
+                .inflate(R.layout.categoryitem_layout, parent, false)
         return ItemViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
-        println(holder)
         holder.header?.text = data[position].name
         holder.subHeader?.text = data[position].description
-        Picasso.get().load(data[position].image).into(holder.image)
+        try {
+            Picasso.get().load(data[position].image).into(holder.image)
+        } catch (exception: Exception) {
+            /* ignore */
+        }
     }
 }
