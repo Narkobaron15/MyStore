@@ -7,4 +7,7 @@
     <string name="add">Add</string>
     <string name="required">Required</string>
     <string name="categoryitem_picdescription">Picture of a category</string>
+    <string name="fab_description">Add a new category</string>
+    <string name="update">Update</string>
+    <string name="upd_cat">Update a category</string>
 </resources>

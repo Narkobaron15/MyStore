@@ -6,8 +6,8 @@ import android.content.Context
 class HomeApplication : Application() {
     override fun onCreate() {
         super.onCreate()
-        HomeApplication.instance = this
-        HomeApplication.appContext = applicationContext
+        instance = this
+        appContext = applicationContext
     }
 
     companion object {

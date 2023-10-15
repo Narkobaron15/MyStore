@@ -9,10 +9,14 @@ import android.net.NetworkRequest
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
+import android.util.Log
+import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mystore.R
+import com.example.mystore.activities.category.CategoryCreateActivity
+import com.example.mystore.activities.category.CategoryUpdateActivity
 import com.example.mystore.adapters.CategoryAdapter
 import com.example.mystore.models.CategoryModel
 import com.example.mystore.network.ApiCommon
@@ -59,6 +63,12 @@ class MainActivity : AppCompatActivity() {
             })
     }
 
+    fun fabOnClick(contextView: View) {
+        Intent (this, CategoryCreateActivity::class.java).also {
+            startActivity(it)
+        }
+    }
+
     private fun enableWifi() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             // Create an intent to launch the Settings.Panel.ACTION_WIFI activity.
@@ -69,8 +79,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showNoInternetSnackbar() {
+        val contextView = findViewById<View>(android.R.id.content).rootView
+
         Snackbar.make(
-            recyclerView.rootView,
+            contextView,
             "Error occurred while fetching categories (check your connection)",
             Snackbar.LENGTH_LONG
         ).setAction("Enable Wi-Fi") {
