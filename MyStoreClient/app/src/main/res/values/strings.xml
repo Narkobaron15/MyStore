@@ -10,4 +10,6 @@
     <string name="fab_description">Add a new category</string>
     <string name="update">Update</string>
     <string name="upd_cat">Update a category</string>
+    <string name="editBtnDescription">Edit</string>
+    <string name="deleteBtnDescription">Delete</string>
 </resources>
