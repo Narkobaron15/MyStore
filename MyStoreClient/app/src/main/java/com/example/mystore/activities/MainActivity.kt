@@ -9,14 +9,12 @@ import android.net.NetworkRequest
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
-import android.util.Log
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mystore.R
 import com.example.mystore.activities.category.CategoryCreateActivity
-import com.example.mystore.activities.category.CategoryUpdateActivity
 import com.example.mystore.adapters.CategoryAdapter
 import com.example.mystore.models.CategoryModel
 import com.example.mystore.network.ApiCommon
