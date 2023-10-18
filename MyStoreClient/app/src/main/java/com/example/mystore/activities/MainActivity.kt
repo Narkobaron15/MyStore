@@ -39,7 +39,6 @@ class MainActivity : AppCompatActivity() {
         recyclerView = findViewById(R.id.recycler)
 
         listenToConnectionStatus()
-        if (!isNetworkAvailable()) showNoInternetSnackbar()
     }
 
     private fun fetchCategories(recyclerView: RecyclerView) {
@@ -103,21 +102,11 @@ class MainActivity : AppCompatActivity() {
         connectivityManager.requestNetwork(
             networkRequest,
             object : ConnectivityManager.NetworkCallback() {
-                override fun onAvailable(network: Network) {
-                    fetchCategories(recyclerView)
-                }
-
-                override fun onLost(network: Network) {
-                    showNoInternetSnackbar()
-                }
+                override fun onAvailable(network: Network) = fetchCategories(recyclerView)
+                override fun onLost(network: Network) = showNoInternetSnackbar()
             })
-    }
 
-    private fun isNetworkAvailable(): Boolean {
-        val connectivityManager = getSystemService(
-            CONNECTIVITY_SERVICE
-        ) as ConnectivityManager
-        val activeNetworkInfo = connectivityManager?.activeNetworkInfo
-        return activeNetworkInfo != null && activeNetworkInfo.isConnected
+        if (connectivityManager.activeNetwork == null)
+            showNoInternetSnackbar()
     }
 }

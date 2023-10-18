@@ -4,7 +4,6 @@ import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -61,7 +60,7 @@ class CategoryAdapter(
         holder.header?.text = currentItem.name
         holder.subHeader?.text = currentItem.description
         try {
-            Picasso.get().load(data[position].image).into(holder.image)
+            Picasso.get().load(currentItem.image).into(holder.image)
         } catch (exception: Exception) {
             /* ignore */
         }
@@ -91,8 +90,6 @@ class CategoryAdapter(
         view: View,
         context: Context
     ) : AlertDialog {
-        Log.w("CategoryAdapter", currentItem.id.toString())
-
         val builder = AlertDialog.Builder(context)
         val failSnackbar = Snackbar.make(
             view,
@@ -106,7 +103,6 @@ class CategoryAdapter(
             ) {
                 if (!response.isSuccessful)
                 {
-                    Log.w("CategoryAdapter", response.message())
                     failSnackbar.show()
                     return
                 }
@@ -118,10 +114,7 @@ class CategoryAdapter(
             override fun onFailure(
                 call: Call<Unit>,
                 t: Throwable
-            ) {
-                Log.w("CategoryAdapter", t.message!!)
-                failSnackbar.show()
-            }
+            ) = failSnackbar.show()
         }
 
         builder.setMessage("Are you sure you want to delete this category?")
