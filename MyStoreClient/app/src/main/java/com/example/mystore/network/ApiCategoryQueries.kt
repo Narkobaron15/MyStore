@@ -12,15 +12,18 @@ import retrofit2.http.PUT
 import retrofit2.http.Path
 
 interface ApiCategoryQueries {
-    @GET("/api/categories/list")
+    @GET("/categories")
     fun getCategories(): Call<MutableList<CategoryModel>>
 
-    @POST("/api/categories/create")
+    @GET("/categories/{id}")
+    fun getCategory(@Path("id") id: Int): Call<CategoryModel>
+
+    @POST("/categories/create")
     fun createCategory(@Body model: CategoryCreateModel): Call<CategoryModel>
 
-    @PUT("/api/categories/update")
+    @PUT("/categories/update")
     fun updateCategory(@Body model: CategoryUpdateModel): Call<CategoryModel>
 
-    @DELETE("/api/categories/{id}")
+    @DELETE("/categories/delete/{id}")
     fun deleteCategory(@Path("id") id: Int): Call<Unit>
 }

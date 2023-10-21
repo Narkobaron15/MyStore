@@ -29,9 +29,10 @@ builder.Services.AddAutoMapper(typeof(MapperProfile));
 // Database context
 builder.Services.AddDbContext<StoreDbContext>(opts =>
 {
-    // opts.UseNpgsql(builder.Configuration.GetConnectionString("WebStoreConnection"));
-    opts.UseNpgsql(Environment.GetEnvironmentVariable("WebStoreConnection") 
-                   ?? throw new Exception());
+    // string conStr = builder.Configuration.GetConnectionString("WebStoreConnection");
+    string conStr = Environment.GetEnvironmentVariable("WebStoreConnection")
+                              ?? throw new Exception("Connection string not found.");
+    opts.UseNpgsql(conStr);
 });
 
 // Identity configurations
@@ -47,7 +48,8 @@ builder.Services.AddIdentity<UserEntity, RoleEntity>(opts =>
 }).AddEntityFrameworkStores<StoreDbContext>().AddDefaultTokenProviders();
 
 // Auth configurations
-SymmetricSecurityKey signingKey = new(Encoding.UTF8.GetBytes(builder.Configuration["JwtSecretKey"]));
+var keyBytes = Encoding.UTF8.GetBytes(builder.Configuration["JwtSecretKey"]);
+SymmetricSecurityKey signingKey = new(keyBytes);
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -75,9 +77,13 @@ builder.Services.AddScoped<IJwtTokenService, JwtTokenServiceImpl>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 
+// Configure the port in the Heroku way
 builder.WebHost.ConfigureKestrel(serverOptions =>
 {
-    serverOptions.Listen(IPAddress.Any, Convert.ToInt32(Environment.GetEnvironmentVariable("PORT")));
+    serverOptions.Listen(
+        IPAddress.Any, 
+        Convert.ToInt32(Environment.GetEnvironmentVariable("PORT"))
+        );
 });
 
 var app = builder.Build();

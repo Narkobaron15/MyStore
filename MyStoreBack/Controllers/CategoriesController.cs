@@ -5,7 +5,7 @@ using MyStoreBack.Models.Category;
 namespace MyStoreBack.Controllers;
 
 [ApiController]
-[Route("/api/[controller]")]
+[Route("[controller]")]
 public class CategoriesController : ControllerBase
 {
     private ICategoryService Service { get; }
@@ -41,7 +41,6 @@ public class CategoriesController : ControllerBase
     public async Task<IActionResult> Update([FromBody] CategoryUpdateModel model)
     {
         CategoryModel? updated = await Service.Update(model);
-
         return updated is not null
             ? Ok(updated)
             : BadRequest(new { message = "Failed to update category." });

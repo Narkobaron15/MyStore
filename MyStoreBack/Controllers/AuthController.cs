@@ -1,12 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
 using MyStoreBack.Business_logic.Authentication;
-using MyStoreBack.Data.Entity.Identity;
 using MyStoreBack.Models.Identity;
 
 namespace MyStoreBack.Controllers;
 
 [ApiController]
-[Route("/api/[controller]")]
+[Route("[controller]")]
 public class AuthController : ControllerBase
 {
     private IAuthService AuthService { get; }
