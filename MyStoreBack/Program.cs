@@ -1,3 +1,4 @@
+using System.Net;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -28,7 +29,9 @@ builder.Services.AddAutoMapper(typeof(MapperProfile));
 // Database context
 builder.Services.AddDbContext<StoreDbContext>(opts =>
 {
-    opts.UseNpgsql(builder.Configuration.GetConnectionString("WebStoreConnection"));
+    // opts.UseNpgsql(builder.Configuration.GetConnectionString("WebStoreConnection"));
+    opts.UseNpgsql(Environment.GetEnvironmentVariable("WebStoreConnection") 
+                   ?? throw new Exception());
 });
 
 // Identity configurations
@@ -71,6 +74,11 @@ builder.Services.AddScoped<IJwtTokenService, JwtTokenServiceImpl>();
 // Other services injection
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
+
+builder.WebHost.ConfigureKestrel(serverOptions =>
+{
+    serverOptions.Listen(IPAddress.Any, Convert.ToInt32(Environment.GetEnvironmentVariable("PORT")));
+});
 
 var app = builder.Build();
 
