@@ -1,6 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using MyStoreBack.Constants;
 using MyStoreBack.Data.Context;
 using MyStoreBack.Data.Entity;
+using MyStoreBack.Data.Entity.Identity;
 
 namespace MyStoreBack.Data.Seeder;
 
@@ -10,11 +13,19 @@ public static class DbSeeder
     {
         using var scope = builder.ApplicationServices.CreateScope();
         var ctx = scope.ServiceProvider.GetRequiredService<StoreDbContext>();
+        var userManager = scope.ServiceProvider.GetRequiredService<UserManager<UserEntity>>();
+        var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<RoleEntity>>();
 
         await MigrateIfAnyIn(ctx);
 
         if (!await ctx.Categories.AnyAsync())
             await SeedCategoriesInto(ctx);
+        
+        if (!await ctx.Roles.AnyAsync())
+            await SeedRoles(roleManager);
+
+        if (!await ctx.Users.AnyAsync())
+            await SeedUsers(userManager);
     }
 
     private static async Task MigrateIfAnyIn(DbContext ctx)
@@ -53,5 +64,31 @@ public static class DbSeeder
             await ctx.AddAsync(c);
 
         await ctx.SaveChangesAsync();
+    }
+
+    private static async Task SeedRoles(
+        RoleManager<RoleEntity> roleManager)
+    {
+        var admin = new RoleEntity { Name = Roles.Admin };
+        var user = new RoleEntity { Name = Roles.User };
+        
+        await roleManager.CreateAsync(admin);
+        await roleManager.CreateAsync(user);
+    }
+    
+    private static async Task SeedUsers(
+        UserManager<UserEntity> userManager)
+    {
+        var admin = new UserEntity
+        {
+            UserName = "admin",
+            Email = "admin@gmail.com",
+            FirstName = "Marko",
+            LastName = "Lysyi",
+            EmailConfirmed = true
+        };
+        
+        await userManager.CreateAsync(admin, "@Adminpwd123");
+        await userManager.AddToRoleAsync(admin, Roles.Admin);
     }
 }

@@ -49,7 +49,7 @@ public class CategoriesController : ControllerBase
             await Context.AddAsync(cat);
             await Context.SaveChangesAsync();
             
-            return Ok(cat.Id);
+            return Ok(cat);
         }
         catch
         {
@@ -68,7 +68,7 @@ public class CategoriesController : ControllerBase
             Context.Update(cat);
             await Context.SaveChangesAsync();
             
-            return Ok(cat.Id);
+            return Ok(cat);
         }
         catch
         {
