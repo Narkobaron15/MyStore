@@ -1,9 +1,12 @@
-﻿using MyStoreBack.Data.Entity;
-using MyStoreBack.Models;
+﻿using AutoMapper;
+using MyStoreBack.Data.Entity;
+using MyStoreBack.Data.Entity.Identity;
+using MyStoreBack.Models.Category;
+using MyStoreBack.Models.Identity;
 
 namespace MyStoreBack.Mapper;
 
-public class MapperProfile : AutoMapper.Profile
+public class MapperProfile : Profile
 {
     public MapperProfile()
     {
@@ -15,5 +18,7 @@ public class MapperProfile : AutoMapper.Profile
 
         CreateMap<CategoryCreateModel, CategoryEntity>();
         CreateMap<CategoryUpdateModel, CategoryEntity>();
+
+        CreateMap<RegisterModel, UserEntity>();
     }
 }

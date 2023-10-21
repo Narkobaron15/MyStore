@@ -1,6 +1,6 @@
-﻿namespace MyStoreBack.Models;
+﻿namespace MyStoreBack.Models.Category;
 
-public class CategoryModel
+public class CategoryUpdateModel
 {
     public int Id { get; set; }
     public string Name { get; set; } = string.Empty;

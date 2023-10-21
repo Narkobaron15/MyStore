@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
+using MyStoreBack.Business_logic.Authentication;
+using MyStoreBack.Business_logic.Category;
 using MyStoreBack.Data.Context;
 using MyStoreBack.Data.Entity.Identity;
 using MyStoreBack.Data.Seeder;
@@ -65,6 +67,10 @@ builder.Services.AddAuthentication(options =>
 
 // JWT token service injection
 builder.Services.AddScoped<IJwtTokenService, JwtTokenServiceImpl>();
+
+// Other services injection
+builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
 
 var app = builder.Build();
 

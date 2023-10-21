@@ -1,4 +1,4 @@
-namespace MyStoreBack.Models;
+namespace MyStoreBack.Models.Identity;
 
 /// <summary>
 /// The model that holds the user data on login.

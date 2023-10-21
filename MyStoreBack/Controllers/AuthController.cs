@@ -1,8 +1,7 @@
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using MyStoreBack.Business_logic.Authentication;
 using MyStoreBack.Data.Entity.Identity;
-using MyStoreBack.Models;
-using MyStoreBack.Security;
+using MyStoreBack.Models.Identity;
 
 namespace MyStoreBack.Controllers;
 
@@ -10,37 +9,38 @@ namespace MyStoreBack.Controllers;
 [Route("/api/[controller]")]
 public class AuthController : ControllerBase
 {
-    private readonly IJwtTokenService _jwtTokenService;
-    private readonly UserManager<UserEntity> _userManager;
-
-    public AuthController(
-        IJwtTokenService jwtTokenService, 
-        UserManager<UserEntity> userManager)
+    private IAuthService AuthService { get; }
+    public AuthController(IAuthService authService)
     {
-        _jwtTokenService = jwtTokenService;
-        _userManager = userManager;
+        AuthService = authService;
     }
 
     [HttpPost("login")]
     public async Task<IActionResult> Login([FromBody] LoginModel model)
     {
-        UserEntity user = await _userManager.FindByEmailAsync(model.Email);
-        if (user is null)
-            return BadRequest("Invalid credentials.");
-
-        bool isPasswordValid = await _userManager.CheckPasswordAsync(user, model.Password);
-        if (!isPasswordValid)
-            return BadRequest("Invalid credentials.");
-
-        string token = await _jwtTokenService.CreateTokenAsync(user);
-        return Ok(new { token });
+        try
+        {
+            var tokens = await AuthService.Login(model);
+            return Ok(tokens);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(new { message = ex.Message });
+        }
     }
 
     [HttpPost("register")]
     public async Task<IActionResult> Register([FromBody] RegisterModel model)
     {
-        await Task.Delay(1000);
-        return NotFound();
+        try
+        {
+            await AuthService.Register(model);
+            return Ok();
+        }
+        catch (Exception ex)
+        {
+           return BadRequest(new { message = ex.Message });
+        }
     }
     
     [HttpPost("refresh")]

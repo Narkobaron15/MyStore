@@ -1,9 +1,6 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using MyStoreBack.Data.Context;
-using MyStoreBack.Data.Entity;
-using MyStoreBack.Models;
+﻿using Microsoft.AspNetCore.Mvc;
+using MyStoreBack.Business_logic.Category;
+using MyStoreBack.Models.Category;
 
 namespace MyStoreBack.Controllers;
 
@@ -11,86 +8,49 @@ namespace MyStoreBack.Controllers;
 [Route("/api/[controller]")]
 public class CategoriesController : ControllerBase
 {
-    private StoreDbContext Context { get; }
-    private IMapper Mapper { get; }
-
-    public CategoriesController(
-        StoreDbContext context,
-        IMapper mapper
-    )
+    private ICategoryService Service { get; }
+    public CategoriesController(ICategoryService service)
     {
-        Context = context;
-        Mapper = mapper;
+        Service = service;
     }
-
+    
     [HttpGet]
     public async Task<IActionResult> Get()
     {
-        var categories = await Context.Categories.ToListAsync();
-        var mapped = Mapper.Map<IEnumerable<CategoryModel>>(categories);
-        return Ok(mapped);
+        var cats = await Service.GetAll();
+        return Ok(cats);
     }
 
     [HttpGet("{id:int}")]
     public async Task<IActionResult> GetById(int id)
     {
-        var cat = await Context.Categories.FindAsync(id);
-        var mapped = Mapper.Map<CategoryModel>(cat);
-        return Ok(mapped);
+        CategoryModel cat = await Service.GetById(id);
+        return Ok(cat);
     }
     
     [HttpPost("create")]
     public async Task<IActionResult> Create([FromBody] CategoryCreateModel model)
     {
-        try
-        {
-            var cat = Mapper.Map<CategoryEntity>(model);
-            
-            await Context.AddAsync(cat);
-            await Context.SaveChangesAsync();
-            
-            return Ok(cat);
-        }
-        catch
-        {
-            return BadRequest("Failed to create category.");
-        }
+        CategoryModel? cat = await Service.Create(model);
+        return cat is not null
+            ? Ok(cat)
+            : BadRequest(new { message = "Failed to create category." });
     }
     
     [HttpPut("update")]
     public async Task<IActionResult> Update([FromBody] CategoryUpdateModel model)
     {
-        try
-        {
-            var cat = await Context.Categories.FindAsync(model.Id) ?? throw new Exception();
-            Mapper.Map(model, cat);
-            
-            Context.Update(cat);
-            await Context.SaveChangesAsync();
-            
-            return Ok(cat);
-        }
-        catch
-        {
-            return BadRequest("Failed to update category.");
-        }            
+        CategoryModel? updated = await Service.Update(model);
+
+        return updated is not null
+            ? Ok(updated)
+            : BadRequest(new { message = "Failed to update category." });
     }
     
     [HttpDelete("delete/{id:int}")]
     public async Task<IActionResult> Delete(int id)
     {
-        try
-        {
-            var cat = await Context.Categories.FindAsync(id) ?? throw new Exception();
-            
-            Context.Remove(cat);
-            await Context.SaveChangesAsync();
-            
-            return Ok();
-        }
-        catch
-        {
-            return BadRequest("Failed to delete category.");
-        }
+        bool result = await Service.Delete(id);
+        return result ? Ok() : BadRequest(new { message = "Failed to delete category."});
     }
 }
