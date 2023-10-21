@@ -36,7 +36,7 @@ public class AuthService : IAuthService
             await _userManager.CheckPasswordAsync(user, model.Password);
         if (!isPasswordValid) throw new InvalidDataException(WrongEmailOrPwdMsg);
 
-        string token = await _jwtTokenService.CreateTokenAsync(user);
+        string token = await _jwtTokenService.CreateAccessToken(user);
         return new Tokens{ AccessToken = token };
     }
 

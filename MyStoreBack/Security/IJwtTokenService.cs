@@ -4,6 +4,6 @@ namespace MyStoreBack.Security;
 
 public interface IJwtTokenService
 {
-    Task<string> CreateTokenAsync(UserEntity user);
+    Task<string> CreateAccessToken(UserEntity user);
     string CreateRefreshToken();
 }

@@ -22,7 +22,7 @@ public class JwtTokenServiceImpl : IJwtTokenService
         UserManager = userManager;
     }
     
-    public async Task<string> CreateTokenAsync(UserEntity user)
+    public async Task<string> CreateAccessToken(UserEntity user)
     {
         var claims = new List<Claim>
         {
