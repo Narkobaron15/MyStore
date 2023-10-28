@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.example.mystore.R
+import com.example.mystore.activities.BaseActivity
 import com.example.mystore.activities.MainActivity
 import com.example.mystore.models.CategoryCreateModel
 import com.example.mystore.models.CategoryModel
@@ -18,7 +19,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class CategoryUpdateActivity : AppCompatActivity() {
+class CategoryUpdateActivity : BaseActivity() {
     private lateinit var catName: TextInputLayout
     private lateinit var catImage: TextInputLayout
     private lateinit var catDescription: TextInputLayout

@@ -78,12 +78,13 @@
             android:layout_marginTop="36dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/descriptionField" >
-        <Button
+        <com.google.android.material.button.MaterialButton
             style="@style/Widget.Material3.Button.Icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingHorizontal="5dp"
             android:layout_centerInParent="true"
+            android:textSize="14dp"
             android:onClick="sendBtnOnClick"
             android:text="@string/add"/>
         </RelativeLayout>
