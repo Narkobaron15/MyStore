@@ -1,4 +1,3 @@
-using MyStoreBack.Models;
 using MyStoreBack.Models.Identity;
 
 namespace MyStoreBack.Business_logic.Authentication;
@@ -10,7 +9,7 @@ public interface IAuthService
     /// </summary>
     /// <param name="model">Model holding user credentials required to login</param>
     /// <returns>An access token and a refresh token</returns>
-    public Task<Tokens> Login(LoginModel model);
+    public Task<TokensModel> Login(LoginModel model);
     /// <summary>
     /// Registers new user.
     /// </summary>
@@ -22,5 +21,5 @@ public interface IAuthService
     /// </summary>
     /// <param name="model">Model holding the access and refresh tokens</param>
     /// <returns>A new set of access and refresh token</returns>
-    public Task<Tokens> Refresh(Tokens model);
+    public Task<TokensModel> Refresh(TokensModel model);
 }

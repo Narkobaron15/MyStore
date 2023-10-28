@@ -5,9 +5,10 @@ using System.Text;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using MyStoreBack.Data.Entity.Identity;
+using MyStoreBack.Models.Identity;
 using JwtRegisteredClaimNames = Microsoft.IdentityModel.JsonWebTokens.JwtRegisteredClaimNames;
 
-namespace MyStoreBack.Security;
+namespace MyStoreBack.Repository.Security;
 
 public class JwtTokenServiceImpl : IJwtTokenService
 {
@@ -21,21 +22,60 @@ public class JwtTokenServiceImpl : IJwtTokenService
         Configuration = configuration;
         UserManager = userManager;
     }
+
+    public async Task<TokensModel> CreateTokens(UserEntity user)
+    {
+        return new TokensModel
+        {
+            AccessToken = await CreateAccessToken(user),
+            RefreshToken = CreateRefreshToken()
+        };
+    }
     
-    public async Task<string> CreateAccessToken(UserEntity user)
+    public ClaimsPrincipal GetPrincipalFromExpiredToken(string token)
+    {
+        var key = Encoding.UTF8.GetBytes(Configuration["JwtSecretKey"]);
+
+        var tokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = false,
+            ValidateAudience = false,
+            ValidateLifetime = false,
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(key),
+            ClockSkew = TimeSpan.Zero
+        };
+
+        var tokenHandler = new JwtSecurityTokenHandler();
+        var principal = tokenHandler.ValidateToken(
+            token, tokenValidationParameters, out var securityToken);
+        if (securityToken is not JwtSecurityToken jwtSecurityToken 
+            || !jwtSecurityToken.Header.Alg.Equals(
+                SecurityAlgorithms.HmacSha256, 
+                StringComparison.InvariantCultureIgnoreCase))
+        {
+            throw new SecurityTokenException("Invalid token");
+        }
+
+        return principal;
+    }      
+    
+    private async Task<string> CreateAccessToken(UserEntity user)
     {
         var claims = new List<Claim>
         {
             new(ClaimTypes.NameIdentifier, user.Id.ToString()),
             new(ClaimTypes.Name, user.UserName),
+            new (ClaimTypes.Email, user.Email),
             new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
             new("image", user.Image ?? "user.jpg"),
         };
         
         var roles = await UserManager.GetRolesAsync(user);
-        foreach (var role in roles)
-            claims.Add(new Claim(ClaimTypes.Role, role));
-        
+        claims.AddRange(roles.Select(
+            role => new Claim(ClaimTypes.Role, role)
+            ));
+
         string secretKey = Configuration["JwtSecretKey"];
         SymmetricSecurityKey key = new(Encoding.UTF8.GetBytes(secretKey));
         SigningCredentials credentials = new(key, SecurityAlgorithms.HmacSha256);
@@ -49,7 +89,7 @@ public class JwtTokenServiceImpl : IJwtTokenService
         return new JwtSecurityTokenHandler().WriteToken(jwt);
     }
 
-    public string CreateRefreshToken()
+    private string CreateRefreshToken()
     {
         var randomNumber = new byte[32];
         using var rng = RandomNumberGenerator.Create();
