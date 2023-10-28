@@ -23,7 +23,7 @@ public class JwtTokenServiceImpl : IJwtTokenService
         UserManager = userManager;
     }
 
-    public async Task<TokensModel> CreateTokens(UserEntity user)
+    public async Task<TokensModel> GenerateToken(UserEntity user)
     {
         return new TokensModel
         {

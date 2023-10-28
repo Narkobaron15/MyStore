@@ -75,11 +75,11 @@ builder.Services.AddAuthentication(options =>
 
 // JWT token service injection
 builder.Services.AddScoped<IJwtTokenService, JwtTokenServiceImpl>();
+builder.Services.AddScoped<ITokenRepository, TokenRepository>();
 
 // Other services injection
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
-builder.Services.AddScoped<ITokenServiceRepository, TokenServiceRepository>();
 
 // Configure the port in the Heroku way
 if (!builder.Environment.IsDevelopment())

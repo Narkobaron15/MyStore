@@ -6,6 +6,6 @@ namespace MyStoreBack.Repository.Security;
 
 public interface IJwtTokenService
 {
-    Task<TokensModel> CreateTokens(UserEntity user);
+    Task<TokensModel> GenerateToken(UserEntity user);
     ClaimsPrincipal GetPrincipalFromExpiredToken(string token);
 }

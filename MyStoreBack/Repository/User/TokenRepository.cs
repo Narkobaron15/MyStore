@@ -5,12 +5,12 @@ using MyStoreBack.Models.Identity;
 
 namespace MyStoreBack.Repository.User;
 
-public class TokenServiceRepository : ITokenServiceRepository
+public class TokenRepository : ITokenRepository
 {
     private readonly UserManager<IdentityUser> _userManager;
     private readonly StoreDbContext _db;
 
-    public TokenServiceRepository(UserManager<IdentityUser> userManager, StoreDbContext db)
+    public TokenRepository(UserManager<IdentityUser> userManager, StoreDbContext db)
     {
         _userManager = userManager;
         _db = db;

@@ -3,7 +3,7 @@ using MyStoreBack.Models.Identity;
 
 namespace MyStoreBack.Repository.User;
 
-public interface ITokenServiceRepository
+public interface ITokenRepository
 {
     Task<bool> IsValidUserAsync(LoginModel user);
 	

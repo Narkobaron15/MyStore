@@ -10,18 +10,18 @@ namespace MyStoreBack.Business_logic.Authentication;
 
 public class AuthService : IAuthService
 {
-    private readonly IJwtTokenService _jwtTokenService;
-    private readonly ITokenServiceRepository _tokenRepository;
+    private readonly IJwtTokenService _tokenService;
+    private readonly ITokenRepository _tokenRepository;
     private readonly UserManager<UserEntity> _userManager;
     private readonly IMapper _mapper;
 
     public AuthService(
-        IJwtTokenService jwtTokenService, 
-        ITokenServiceRepository tokenRepository,
+        IJwtTokenService tokenService, 
+        ITokenRepository tokenRepository,
         UserManager<UserEntity> userManager, 
         IMapper mapper)
     {
-        _jwtTokenService = jwtTokenService;
+        _tokenService = tokenService;
         _tokenRepository = tokenRepository;
         _userManager = userManager;
         _mapper = mapper;
@@ -41,8 +41,8 @@ public class AuthService : IAuthService
         if (!isPasswordValid) 
             throw new InvalidDataException(WrongEmailOrPwdMsg);
 
-        var tokens = await _jwtTokenService.CreateTokens(user);
-        _tokenRepository.AddUserRefreshTokens(new UserRefreshTokens
+        var tokens = await _tokenService.GenerateToken(user);
+        await _tokenRepository.AddUserRefreshTokens(new UserRefreshTokens
         {
             UserName = user.UserName,
             RefreshToken = tokens.RefreshToken,
@@ -65,8 +65,9 @@ public class AuthService : IAuthService
 
     public async Task<TokensModel> Refresh(TokensModel model)
     {
-        var principal = _jwtTokenService.GetPrincipalFromExpiredToken(model.AccessToken);
-        var username = principal.Identity?.Name;
+        var principal = _tokenService.GetPrincipalFromExpiredToken(model.AccessToken);
+        var user = await _userManager.GetUserAsync(principal);
+        var username = user.UserName;
 
         //retrieve the saved refresh token from database
         if (username != null)
@@ -79,7 +80,7 @@ public class AuthService : IAuthService
             }
         }
 
-        var newJwtToken = jWTManager.GenerateRefreshToken(username);
+        var newJwtToken = _tokenService.GenerateToken(user);
 
         if (newJwtToken == null)
         {
