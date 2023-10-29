@@ -23,8 +23,10 @@ public class JwtTokenServiceImpl : IJwtTokenService
         UserManager = userManager;
     }
 
-    public async Task<TokensModel> GenerateToken(UserEntity user)
+    public async Task<TokensModel?> GenerateToken(UserEntity? user)
     {
+        if (user == null) return null;
+        
         return new TokensModel
         {
             AccessToken = await CreateAccessToken(user),
@@ -38,9 +40,9 @@ public class JwtTokenServiceImpl : IJwtTokenService
 
         var tokenValidationParameters = new TokenValidationParameters
         {
-            ValidateIssuer = false,
-            ValidateAudience = false,
-            ValidateLifetime = false,
+            ValidateAudience = false, // on production make true
+            ValidateIssuer = true,
+            ValidateLifetime = true,
             ValidateIssuerSigningKey = true,
             IssuerSigningKey = new SymmetricSecurityKey(key),
             ClockSkew = TimeSpan.Zero
@@ -83,7 +85,8 @@ public class JwtTokenServiceImpl : IJwtTokenService
         JwtSecurityToken jwt = new(
             signingCredentials: credentials,
             claims: claims,
-            expires: DateTime.Now.AddDays(15)
+            expires: DateTime.Now.AddDays(15),
+            issuer: Configuration["JwtIssuer"]
         );
         
         return new JwtSecurityTokenHandler().WriteToken(jwt);

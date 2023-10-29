@@ -9,7 +9,7 @@ public interface IAuthService
     /// </summary>
     /// <param name="model">Model holding user credentials required to login</param>
     /// <returns>An access token and a refresh token</returns>
-    public Task<TokensModel> Login(LoginModel model);
+    public Task<TokensModel?> Login(LoginModel model);
     /// <summary>
     /// Registers new user.
     /// </summary>

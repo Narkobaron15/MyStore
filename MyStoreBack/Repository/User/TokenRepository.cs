@@ -7,10 +7,10 @@ namespace MyStoreBack.Repository.User;
 
 public class TokenRepository : ITokenRepository
 {
-    private readonly UserManager<IdentityUser> _userManager;
+    private readonly UserManager<UserEntity> _userManager;
     private readonly StoreDbContext _db;
 
-    public TokenRepository(UserManager<IdentityUser> userManager, StoreDbContext db)
+    public TokenRepository(UserManager<UserEntity> userManager, StoreDbContext db)
     {
         _userManager = userManager;
         _db = db;

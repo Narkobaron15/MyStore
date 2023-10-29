@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using MyStoreBack.Business_logic.Authentication;
 using MyStoreBack.Business_logic.Category;
 using MyStoreBack.Data.Context;
@@ -22,7 +23,21 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(c => {
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "You api title", Version = "v1" });
+    c.AddSecurityDefinition("Bearer",
+        new OpenApiSecurityScheme 
+        { 
+            In = ParameterLocation.Header,
+            Description = "Please enter into field the word 'Bearer' following by space and JWT", 
+            Name = "Authorization",
+            Type = SecuritySchemeType.ApiKey
+        });
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        { new OpenApiSecurityScheme { Name = "Bearer" }, new List<string>() }
+    });
+});
 
 builder.Services.AddCors();
 
@@ -64,12 +79,21 @@ builder.Services.AddAuthentication(options =>
     cfg.TokenValidationParameters = new TokenValidationParameters
     {
         IssuerSigningKey = signingKey,
-        ValidateAudience = false,
+        ValidateAudience = false, // on production make true
         ValidateIssuer = true,
-        ValidIssuer = builder.Configuration["JwtIssuer"],
         ValidateLifetime = true,
         ValidateIssuerSigningKey = true,
+        ValidIssuer = builder.Configuration["JwtIssuer"],
         ClockSkew = TimeSpan.Zero
+    };
+    cfg.Events = new JwtBearerEvents {
+        OnAuthenticationFailed = context => {
+            if (context.Exception.GetType() == typeof(SecurityTokenExpiredException))
+            {
+                context.Response.Headers.Add("IS-TOKEN-EXPIRED", "true");
+            }
+            return Task.CompletedTask;
+        }
     };
 });
 

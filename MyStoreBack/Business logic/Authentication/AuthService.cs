@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.IdentityModel.Tokens;
 using MyStoreBack.Constants;
 using MyStoreBack.Data.Entity.Identity;
 using MyStoreBack.Models.Identity;
@@ -30,7 +31,7 @@ public class AuthService : IAuthService
     private static readonly string WrongEmailOrPwdMsg 
         = "Email or password is incorrect.";
     
-    public async Task<TokensModel> Login(LoginModel model)
+    public async Task<TokensModel?> Login(LoginModel model)
     {
         UserEntity user = await _userManager.FindByEmailAsync(model.Email);
         if (user is null) 
@@ -45,7 +46,7 @@ public class AuthService : IAuthService
         await _tokenRepository.AddUserRefreshTokens(new UserRefreshTokens
         {
             UserName = user.UserName,
-            RefreshToken = tokens.RefreshToken,
+            RefreshToken = tokens!.RefreshToken,
         });
         return tokens;
     }
@@ -69,33 +70,29 @@ public class AuthService : IAuthService
         var user = await _userManager.GetUserAsync(principal);
         var username = user.UserName;
 
-        //retrieve the saved refresh token from database
+        // retrieve the saved refresh token from database
         if (username != null)
         {
             var savedRefreshToken = _tokenRepository.GetSavedRefreshTokens(username, model.RefreshToken);
-
             if (savedRefreshToken != null && savedRefreshToken.RefreshToken != model.RefreshToken)
-            {
-                return Unauthorized("Invalid attempt!");
-            }
+                throw new SecurityTokenException("Invalid refresh token");
         }
 
-        var newJwtToken = _tokenService.GenerateToken(user);
+        var newJwtToken = await _tokenService.GenerateToken(user);
 
         if (newJwtToken == null)
-        {
-            return Unauthorized("Invalid attempt!");
-        }
+            throw new SecurityTokenException("Invalid attempt!");
 
         // saving refresh token to the db
-        UserRefreshTokens obj = new UserRefreshTokens
+        UserRefreshTokens obj = new()
         {
-            RefreshToken = newJwtToken.Refresh_Token,
-            UserName = username
+            RefreshToken = newJwtToken.RefreshToken,
+            UserName = username!
         };
 
-        await _tokenRepository.DeleteUserRefreshTokens(username, model.RefreshToken);
+        await _tokenRepository.DeleteUserRefreshTokens(username!, model.RefreshToken);
         await _tokenRepository.AddUserRefreshTokens(obj);
-        
+
+        return newJwtToken;
     }
 }
