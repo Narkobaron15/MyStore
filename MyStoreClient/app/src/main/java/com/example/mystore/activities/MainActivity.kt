@@ -10,8 +10,8 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import android.view.View
-import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
-import androidx.appcompat.app.AppCompatActivity
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mystore.R
 import com.example.mystore.activities.category.CategoryCreateActivity
@@ -24,40 +24,19 @@ import retrofit2.Callback
 import retrofit2.Response
 
 
-class MainActivity : AppCompatActivity() {
-    private lateinit var recyclerView: RecyclerView
-
+class MainActivity : BaseActivity() {
     // Register an activity launcher for Wi-Fi menu
     private val activityResultLauncher = registerForActivityResult(
-        StartActivityForResult()
+        ActivityResultContracts.StartActivityForResult()
     ) { }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        recyclerView = findViewById(R.id.recycler)
+        val recyclerView: RecyclerView = findViewById(R.id.recycler)
 
-        listenToConnectionStatus()
-    }
-
-    private fun fetchCategories(recyclerView: RecyclerView) {
-        ApiCommon.categoryService.getCategories()
-            .enqueue(object : Callback<MutableList<CategoryModel>> {
-                override fun onResponse(
-                    call: Call<MutableList<CategoryModel>>,
-                    response: Response<MutableList<CategoryModel>>
-                ) {
-                    val categories = response.body() ?: listOf()
-                    recyclerView.adapter = CategoryAdapter(categories)
-                }
-
-                override fun onFailure(
-                    call: Call<MutableList<CategoryModel>>,
-                    t: Throwable) {
-                    showNoInternetSnackbar()
-                }
-            })
+        listenToConnectionStatus(recyclerView)
     }
 
     fun fabOnClick(contextView: View) {
@@ -88,7 +67,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     // Create a listener for network status
-    private fun listenToConnectionStatus() {
+    private fun listenToConnectionStatus(recyclerView: RecyclerView) {
         val networkRequest = NetworkRequest.Builder()
             .addTransportType(NetworkCapabilities.TRANSPORT_WIFI)
             .addTransportType(NetworkCapabilities.TRANSPORT_CELLULAR)
@@ -108,5 +87,24 @@ class MainActivity : AppCompatActivity() {
 
         if (connectivityManager.activeNetwork == null)
             showNoInternetSnackbar()
+    }
+
+    private fun fetchCategories(recyclerView: RecyclerView) {
+        ApiCommon.categoryService.getCategories()
+            .enqueue(object : Callback<MutableList<CategoryModel>> {
+                override fun onResponse(
+                    call: Call<MutableList<CategoryModel>>,
+                    response: Response<MutableList<CategoryModel>>
+                ) {
+                    val categories = response.body() ?: listOf()
+                    recyclerView.adapter = CategoryAdapter(categories)
+                }
+
+                override fun onFailure(
+                    call: Call<MutableList<CategoryModel>>,
+                    t: Throwable) {
+                    showNoInternetSnackbar()
+                }
+            })
     }
 }

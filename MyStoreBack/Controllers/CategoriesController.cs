@@ -1,11 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using MyStoreBack.Business_logic.Category;
 using MyStoreBack.Models.Category;
 
 namespace MyStoreBack.Controllers;
 
-[ApiController]
-[Route("[controller]")]
+[ApiController, Authorize, Route("[controller]")]
 public class CategoriesController : ControllerBase
 {
     private ICategoryService Service { get; }

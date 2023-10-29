@@ -1,11 +1,11 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MyStoreBack.Business_logic.Authentication;
 using MyStoreBack.Models.Identity;
 
 namespace MyStoreBack.Controllers;
 
-[ApiController]
-[Route("[controller]")]
+[ApiController, AllowAnonymous, Route("[controller]")]
 public class AuthController : ControllerBase
 {
     private IAuthService AuthService { get; }
@@ -24,7 +24,7 @@ public class AuthController : ControllerBase
         }
         catch (Exception ex)
         {
-            return BadRequest(new { message = ex.Message });
+            return Unauthorized(new { message = ex.Message });
         }
     }
 
@@ -43,9 +43,16 @@ public class AuthController : ControllerBase
     }
     
     [HttpPost("refresh")]
-    public async Task<IActionResult> Refresh()
+    public async Task<IActionResult> Refresh(TokensModel tokens)
     {
-        await Task.Delay(1000);
-        return NotFound();
+        try
+        {
+            var newTokens = await AuthService.Refresh(tokens);
+            return Ok(newTokens);
+        }
+        catch (Exception exception)
+        {
+            return Unauthorized(new { message = exception.Message });
+        }
     }
 }

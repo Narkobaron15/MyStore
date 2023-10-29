@@ -14,6 +14,7 @@ public class StoreDbContext : IdentityDbContext<UserEntity, RoleEntity, int,
         : base(opts) {}
 
     public DbSet<CategoryEntity> Categories { get; set; } = null!;
+    public DbSet<UserRefreshTokens> RefreshTokens { get; set; } = null!;
     
     protected override void OnModelCreating(ModelBuilder builder)
     {
