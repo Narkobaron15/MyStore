@@ -5,14 +5,12 @@ import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import androidx.appcompat.app.AppCompatActivity
 import com.example.mystore.R
 import com.example.mystore.activities.BaseActivity
 import com.example.mystore.activities.MainActivity
-import com.example.mystore.models.CategoryCreateModel
-import com.example.mystore.models.CategoryModel
-import com.example.mystore.models.CategoryUpdateModel
-import com.example.mystore.network.ApiCommon
+import com.example.mystore.models.category.CategoryModel
+import com.example.mystore.models.category.CategoryUpdateModel
+import com.example.mystore.network.ApiClient
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
 import retrofit2.Call
@@ -63,7 +61,7 @@ class CategoryUpdateActivity : BaseActivity() {
             return
         }
 
-        ApiCommon.categoryService.updateCategory(model)
+        ApiClient.categoryService.updateCategory(model)
             .enqueue(object: Callback<CategoryModel> {
             override fun onResponse(
                 call: Call<CategoryModel>,

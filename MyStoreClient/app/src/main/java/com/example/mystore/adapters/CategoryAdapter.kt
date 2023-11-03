@@ -14,8 +14,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.mystore.R
 import com.example.mystore.activities.MainActivity
 import com.example.mystore.activities.category.CategoryUpdateActivity
-import com.example.mystore.models.CategoryModel
-import com.example.mystore.network.ApiCommon
+import com.example.mystore.models.category.CategoryModel
+import com.example.mystore.network.ApiClient
 import com.google.android.material.snackbar.Snackbar
 import com.squareup.picasso.Picasso
 import retrofit2.Call
@@ -120,7 +120,7 @@ class CategoryAdapter(
         builder.setMessage("Are you sure you want to delete this category?")
             .setCancelable(false)
             .setPositiveButton("Yes") { _, _ ->
-                ApiCommon.categoryService.deleteCategory(currentItem.id!!)
+                ApiClient.categoryService.deleteCategory(currentItem.id!!)
                     .enqueue(callback)
             }
             .setNegativeButton("No") { dialog, _ ->

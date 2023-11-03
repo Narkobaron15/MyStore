@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.LoginActivity" android:layout_margin="10dp">
+
+    <TextView
+        app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/login_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="30sp"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textFontWeight="700"
+        android:layout_marginTop="20dp"
+        android:text="Log in to continue"/>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/usernameField"
+        app:layout_constraintTop_toBottomOf="@id/login_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="30dp"
+        android:layout_marginTop="170dp"
+        android:hint="@string/labelLogin"
+        app:errorEnabled="true"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        app:helperTextTextColor="@color/design_default_color_error"
+        tools:layout_editor_absoluteX="31dp">
+        <com.google.android.material.textfield.TextInputEditText
+            android:singleLine="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/passwordField"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="30dp"
+        android:hint="@string/labelPassword"
+        app:errorEnabled="true"
+        app:helperTextTextColor="@color/design_default_color_error"
+        app:layout_constraintTop_toBottomOf="@id/usernameField"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        tools:layout_editor_absoluteX="31dp">
+        <com.google.android.material.textfield.TextInputEditText
+            android:singleLine="true"
+            android:inputType="textPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <RelativeLayout
+        app:layout_constraintTop_toBottomOf="@id/passwordField"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/loginBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/labelLogin" />
+    </RelativeLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
