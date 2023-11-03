@@ -1,8 +1,8 @@
-package com.example.mystore.network
+package com.example.mystore.network.category
 
-import com.example.mystore.models.CategoryCreateModel
-import com.example.mystore.models.CategoryModel
-import com.example.mystore.models.CategoryUpdateModel
+import com.example.mystore.models.category.CategoryCreateModel
+import com.example.mystore.models.category.CategoryModel
+import com.example.mystore.models.category.CategoryUpdateModel
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.DELETE

@@ -1,5 +1,6 @@
 package com.example.mystore.activities
 
+import SessionManager
 import android.content.Context
 import android.content.Intent
 import android.net.ConnectivityManager
@@ -9,15 +10,16 @@ import android.net.NetworkRequest
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
+import android.util.Log
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mystore.R
 import com.example.mystore.activities.category.CategoryCreateActivity
 import com.example.mystore.adapters.CategoryAdapter
-import com.example.mystore.models.CategoryModel
-import com.example.mystore.network.ApiCommon
+import com.example.mystore.application.HomeApplication
+import com.example.mystore.models.category.CategoryModel
+import com.example.mystore.network.ApiClient
 import com.google.android.material.snackbar.Snackbar
 import retrofit2.Call
 import retrofit2.Callback
@@ -32,10 +34,18 @@ class MainActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_category_list)
 
-        val recyclerView: RecyclerView = findViewById(R.id.recycler)
+        Log.i("MainActivity", "App context: ${HomeApplication.getAppContext()}")
+        val sessionManager = SessionManager(HomeApplication.getAppContext())
+        Log.i("MainActivity", "Token: ${sessionManager.fetchAuthToken()}")
+        if (sessionManager.fetchAuthToken() == null) {
+            Intent(this, LoginActivity::class.java).also {
+                startActivity(it)
+            }
+        }
 
+        val recyclerView : RecyclerView = findViewById(R.id.recycler)
         listenToConnectionStatus(recyclerView)
     }
 
@@ -90,7 +100,7 @@ class MainActivity : BaseActivity() {
     }
 
     private fun fetchCategories(recyclerView: RecyclerView) {
-        ApiCommon.categoryService.getCategories()
+        ApiClient.categoryService.getCategories()
             .enqueue(object : Callback<MutableList<CategoryModel>> {
                 override fun onResponse(
                     call: Call<MutableList<CategoryModel>>,

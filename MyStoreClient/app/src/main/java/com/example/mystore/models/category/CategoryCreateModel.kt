@@ -1,4 +1,4 @@
-package com.example.mystore.models
+package com.example.mystore.models.category
 
 data class CategoryCreateModel (
     var name: String,
