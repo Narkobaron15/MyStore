@@ -36,16 +36,14 @@ class MainActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_category_list)
 
-        Log.i("MainActivity", "App context: ${HomeApplication.getAppContext()}")
         val sessionManager = SessionManager(HomeApplication.getAppContext())
-        Log.i("MainActivity", "Token: ${sessionManager.fetchAuthToken()}")
         if (sessionManager.fetchAuthToken() == null) {
             Intent(this, LoginActivity::class.java).also {
                 startActivity(it)
             }
         }
 
-        val recyclerView : RecyclerView = findViewById(R.id.recycler)
+        val recyclerView: RecyclerView = findViewById(R.id.recycler)
         listenToConnectionStatus(recyclerView)
     }
 
