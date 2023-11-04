@@ -3,6 +3,7 @@
     <string name="add_cat">Add a category</string>
     <string name="labelName">Name</string>
     <string name="labelImage">Add image</string>
+    <string name="labelImage">Add image</string>
     <string name="labelDescription">Description</string>
     <string name="add">Add</string>
     <string name="required">Required</string>

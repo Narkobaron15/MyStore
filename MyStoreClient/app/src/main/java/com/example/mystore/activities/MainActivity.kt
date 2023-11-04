@@ -1,7 +1,6 @@
 package com.example.mystore.activities
 
 import SessionManager
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.net.ConnectivityManager
@@ -21,7 +20,6 @@ import com.example.mystore.activities.category.CategoryCreateActivity
 import com.example.mystore.adapters.CategoryAdapter
 import com.example.mystore.application.HomeApplication
 import com.example.mystore.models.category.CategoryModel
-import com.example.mystore.models.user.RegisterModel
 import com.example.mystore.network.ApiClient
 import com.google.android.material.snackbar.Snackbar
 import okhttp3.MediaType
