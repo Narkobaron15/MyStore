@@ -1,0 +1,34 @@
+version: "3.9"
+
+services:
+  mystoredb:
+    image: postgres:14.5
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123456
+      POSTGRES_DB: MyStoreDb
+    # ports:
+      # - "5433:5432"
+    volumes:
+      - database:/var/lib/postgresql/data
+
+  mystoreback:
+    build: 
+      context: ./MyStoreBack
+      dockerfile: Dockerfile
+    depends_on:
+      - mystoredb
+    ports:
+      - "80:80"
+    environment:
+      - ConnectionStrings__WebStoreConnection=Host=mystoredb;Port=5432;Database=MyStoreDb;User Id=postgres;Password=123456;
+      - JwtSecretKey=fds,gJI$#)JF)IjdnuoiUJWEofj@I(j98rh439hf3oiksdmlfj)sjfgn**@$UIF
+      - JwtIssuer=narkobaron.ninja
+      - ASPNETCORE_ENVIRONMENT=Production
+    volumes:
+        - MyStoreImages:/app/images
+
+volumes:
+  database:
+  MyStoreImages:
+

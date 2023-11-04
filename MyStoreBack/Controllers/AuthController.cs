@@ -29,7 +29,8 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("register")]
-    public async Task<IActionResult> Register([FromBody] RegisterModel model)
+    // [Consumes("multipart/form-data", "image/jpg", "image/png", "image/gif")]
+    public async Task<IActionResult> Register([FromForm] RegisterModel model)
     {
         try
         {

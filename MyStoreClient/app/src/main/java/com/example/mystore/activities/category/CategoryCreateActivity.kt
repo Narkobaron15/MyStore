@@ -1,15 +1,21 @@
 package com.example.mystore.activities.category
 
 import android.app.Activity
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Button
 import androidx.activity.result.contract.ActivityResultContracts
+import android.widget.Button
+import androidx.activity.result.contract.ActivityResultContracts
 import com.example.mystore.R
 import com.example.mystore.activities.BaseActivity
 import com.example.mystore.activities.MainActivity
+import com.example.mystore.models.category.CategoryCreateModel
+import com.example.mystore.models.category.CategoryModel
+import com.example.mystore.network.ApiClient
 import com.example.mystore.models.category.CategoryCreateModel
 import com.example.mystore.models.category.CategoryModel
 import com.example.mystore.network.ApiClient
@@ -21,7 +27,7 @@ import retrofit2.Response
 
 class CategoryCreateActivity : BaseActivity() {
     private lateinit var catName: TextInputLayout
-    private lateinit var catImage: Button
+    private var catImage: String? = null
     private lateinit var catDescription: TextInputLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,19 +35,18 @@ class CategoryCreateActivity : BaseActivity() {
         setContentView(R.layout.activity_category_create)
 
         catName = findViewById(R.id.nameField)
-        catImage = findViewById(R.id.imageField)
         catDescription = findViewById(R.id.descriptionField)
     }
 
     // Receiver
-    private val getResult =
-        registerForActivityResult(
-            ActivityResultContracts.StartActivityForResult()) {
-            if (it.resultCode == Activity.RESULT_OK){
-                val value = it.data?.getStringExtra("input")
-                Log.d("CategoryCreateActivity", it.data?.data.toString())
-            }
+    private val getResult = registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()
+    ) {
+        if (it.resultCode == Activity.RESULT_OK) {
+            catImage = it.data?.getStringExtra("input")
+            Log.d("CategoryCreateActivity", it.data?.data.toString())
         }
+    }
 
     fun imgBtnOnClick(contextView: View) {
         val intent = Intent(Intent.ACTION_GET_CONTENT)
@@ -52,18 +57,19 @@ class CategoryCreateActivity : BaseActivity() {
     fun sendBtnOnClick(contextView: View) {
         val name = catName.editText?.text.toString().trim()
         val image = "" //catImage.editText?.text.toString().trim()
+        val image = "" //catImage.editText?.text.toString().trim()
         val description = catDescription.editText?.text.toString().trim()
 
-        val errors = CategoryValidator.isValid(name, description, image)
+        val errors = CategoryValidator.isValid(name, description)
         if (!errors.isValid) {
             catName.error = errors.name
             catDescription.error = errors.description
-            catImage.error = errors.image
             return
         }
 
         val model = CategoryCreateModel(name, description, image)
 
+        ApiClient.categoryService.createCategory(model)
         ApiClient.categoryService.createCategory(model)
             .enqueue(object: Callback<CategoryModel> {
             override fun onResponse(

@@ -53,11 +53,10 @@ class CategoryUpdateActivity : BaseActivity() {
             catDescription.editText?.text.toString().trim()
         )
 
-        val errors = CategoryValidator.isValid(model.name, model.description, model.image)
+        val errors = CategoryValidator.isValid(model.name, model.description)
         if (!errors.isValid) {
             catName.error = errors.name
             catDescription.error = errors.description
-            catImage.error = errors.image
             return
         }
 

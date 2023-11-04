@@ -4,11 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingHorizontal="30dp"
     tools:context=".activities.LoginActivity" android:layout_margin="10dp">
 
     <TextView
         app:layout_constraintTop_toTopOf="parent"
-        android:id="@+id/login_title"
+        android:id="@+id/register_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="30sp"
@@ -16,16 +17,15 @@
         android:textColor="@color/black"
         android:textFontWeight="700"
         android:layout_marginTop="20dp"
-        android:text="Log in to continue"/>
+        android:text="@string/login_header"/>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/usernameField"
-        app:layout_constraintTop_toBottomOf="@id/login_title"
+        app:layout_constraintTop_toBottomOf="@id/register_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="30dp"
         android:layout_marginTop="170dp"
-        android:hint="@string/labelLogin"
+        android:hint="@string/labelUname"
         app:errorEnabled="true"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         app:helperTextTextColor="@color/design_default_color_error"
@@ -40,7 +40,6 @@
         android:id="@+id/passwordField"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="30dp"
         android:hint="@string/labelPassword"
         app:errorEnabled="true"
         app:helperTextTextColor="@color/design_default_color_error"
@@ -56,6 +55,7 @@
 
     <RelativeLayout
         app:layout_constraintTop_toBottomOf="@id/passwordField"
+        android:layout_marginTop="15dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 

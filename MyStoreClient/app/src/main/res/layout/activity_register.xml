@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingHorizontal="30dp"
+    tools:context=".activities.RegisterActivity">
+
+    <TextView
+        app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/register_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="30sp"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textFontWeight="700"
+        android:layout_marginTop="20dp"
+        android:text="@string/register_header"/>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/emailField"
+        app:layout_constraintTop_toBottomOf="@id/register_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:hint="@string/labelEmail"
+        app:errorEnabled="true"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        app:helperTextTextColor="@color/design_default_color_error"
+        tools:layout_editor_absoluteX="31dp">
+        <com.google.android.material.textfield.TextInputEditText
+            android:singleLine="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <LinearLayout
+        android:id="@+id/nameContainer"
+        app:layout_constraintTop_toBottomOf="@id/emailField"
+        app:layout_constraintStart_toStartOf="parent"
+        android:columnCount="2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/firstNameField"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:hint="@string/labelFirstName"
+            app:errorEnabled="true"
+            app:helperTextTextColor="@color/design_default_color_error"
+            app:layout_constraintTop_toBottomOf="@id/nameContainer"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            tools:layout_editor_absoluteX="31dp">
+            <com.google.android.material.textfield.TextInputEditText
+                android:singleLine="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/lastNameField"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:hint="@string/labelLastName"
+            app:errorEnabled="true"
+            app:helperTextTextColor="@color/design_default_color_error"
+            app:layout_constraintTop_toBottomOf="@id/nameContainer"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            tools:layout_editor_absoluteX="31dp">
+            <com.google.android.material.textfield.TextInputEditText
+                android:singleLine="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
+    </LinearLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/usernameField"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/labelUname"
+        app:errorEnabled="true"
+        app:helperTextTextColor="@color/design_default_color_error"
+        app:layout_constraintTop_toBottomOf="@id/nameContainer"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        tools:layout_editor_absoluteX="31dp">
+        <com.google.android.material.textfield.TextInputEditText
+            android:singleLine="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/passwordField"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/labelPassword"
+        app:errorEnabled="true"
+        app:helperTextTextColor="@color/design_default_color_error"
+        app:layout_constraintTop_toBottomOf="@id/usernameField"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        tools:layout_editor_absoluteX="31dp">
+        <com.google.android.material.textfield.TextInputEditText
+            android:singleLine="true"
+            android:inputType="textPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/repeatPasswordField"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/labelPasswordRepeat"
+        app:errorEnabled="true"
+        app:helperTextTextColor="@color/design_default_color_error"
+        app:layout_constraintTop_toBottomOf="@id/passwordField"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        tools:layout_editor_absoluteX="31dp">
+        <com.google.android.material.textfield.TextInputEditText
+            android:singleLine="true"
+            android:inputType="textPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <RelativeLayout
+        app:layout_constraintTop_toBottomOf="@id/repeatPasswordField"
+        android:layout_marginTop="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/loginBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/labelRegister" />
+    </RelativeLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
