@@ -8,11 +8,12 @@ public class RegisterModel
     public string Email { get; set; } = String.Empty;
     [StringLength(100), Required]
     public string UserName { get; set; } = String.Empty;
+    [StringLength(256), Required]
     public string Password { get; set; } = String.Empty;
     [StringLength(100), Required]
     public string FirstName { get; set; } = String.Empty;
     [StringLength(100), Required]
     public string LastName { get; set; } = String.Empty;
-    [StringLength(300)]
-    public string? Image { get; set; }
+    // [StringLength(300)]
+    public IFormFile? Image { get; set; }
 }

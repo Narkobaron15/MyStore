@@ -1,12 +1,14 @@
 package com.example.mystore.activities
 
 import SessionManager
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.net.ConnectivityManager
 import android.net.Network
 import android.net.NetworkCapabilities
 import android.net.NetworkRequest
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
@@ -19,11 +21,16 @@ import com.example.mystore.activities.category.CategoryCreateActivity
 import com.example.mystore.adapters.CategoryAdapter
 import com.example.mystore.application.HomeApplication
 import com.example.mystore.models.category.CategoryModel
+import com.example.mystore.models.user.RegisterModel
 import com.example.mystore.network.ApiClient
 import com.google.android.material.snackbar.Snackbar
+import okhttp3.MediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.io.File
 
 
 class MainActivity : BaseActivity() {

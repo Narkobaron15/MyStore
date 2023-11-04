@@ -21,6 +21,14 @@
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
+    <string name="labelUname">Username</string>
     <string name="labelLogin">Login</string>
     <string name="labelPassword">Password</string>
+    <string name="login_header">Log in to continue</string>
+    <string name="labelEmail">Email</string>
+    <string name="register_header">Create a new account</string>
+    <string name="labelPasswordRepeat">Repeat password</string>
+    <string name="labelFirstName">First name</string>
+    <string name="labelLastName">Last name</string>
+    <string name="labelRegister">Register</string>
 </resources>

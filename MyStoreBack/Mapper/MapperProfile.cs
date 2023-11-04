@@ -19,6 +19,9 @@ public class MapperProfile : Profile
         CreateMap<CategoryCreateModel, CategoryEntity>();
         CreateMap<CategoryUpdateModel, CategoryEntity>();
 
-        CreateMap<RegisterModel, UserEntity>();
+        CreateMap<RegisterModel, UserEntity>().ForMember(
+            x => x.Image,
+            opt => opt.Ignore()
+        );
     }
 }

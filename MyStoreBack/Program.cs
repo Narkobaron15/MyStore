@@ -149,9 +149,8 @@ else
             $"{context.HttpContext.Response.StatusCode} Error");
     });
     app.UseHsts();
+    app.UseHttpsRedirection();
 }
-
-app.UseHttpsRedirection();
 
 app.UseAuthentication();
 app.UseAuthorization();
