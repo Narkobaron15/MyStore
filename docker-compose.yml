@@ -22,7 +22,7 @@ services:
       - "80:80"
     environment:
       - ConnectionStrings__WebStoreConnection=Host=mystoredb;Port=5432;Database=MyStoreDb;User Id=postgres;Password=123456;
-      - JwtSecretKey=fds,gJI$#)JF)IjdnuoiUJWEofj@I(j98rh439hf3oiksdmlfj)sjfgn**@$UIF
+      - JwtSecretKey=123456
       - JwtIssuer=narkobaron.ninja
       - ASPNETCORE_ENVIRONMENT=Production
     volumes:
