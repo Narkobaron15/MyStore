@@ -2,11 +2,11 @@ pipeline {
   agent any
 
   stages {
-    stage('Build') {
-      steps {
-        sh 'docker build -t my-store-app .'
-        sh 'docker tag my-store-app $DOCKER_IMAGE'
-      }
+    stage('Build Docker Image') {  
+    steps {                     
+      sh 'docker-compose build'     
+      echo 'Docker-compose-build Build Image Completed'                
+    }           
     }
     stage('Deploy') {
       steps {
