@@ -46,10 +46,7 @@ builder.Services.AddAutoMapper(typeof(MapperProfile));
 // Database context
 builder.Services.AddDbContext<StoreDbContext>(opts =>
 {
-    var conStr = builder.Environment.IsDevelopment()
-        ? builder.Configuration.GetConnectionString("WebStoreConnection")
-        : Environment.GetEnvironmentVariable("WebStoreConnection")
-            ?? throw new Exception("Connection string not found.");
+    var conStr = builder.Configuration.GetConnectionString("WebStoreConnection");
     opts.UseNpgsql(conStr);
 });
 
@@ -105,16 +102,6 @@ builder.Services.AddScoped<ITokenRepository, TokenRepository>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 
-// Configure the port in the Heroku way
-if (!builder.Environment.IsDevelopment())
-    builder.WebHost.ConfigureKestrel(serverOptions =>
-    {
-        serverOptions.Listen(
-            IPAddress.Any, 
-            Convert.ToInt32(Environment.GetEnvironmentVariable("PORT"))
-        );
-    });
-
 var app = builder.Build();
 
 app.UseCors(policyBuilder => policyBuilder
@@ -140,17 +127,16 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 } 
-else
+
+app.UseStatusCodePages(async context =>
 {
-    app.UseStatusCodePages(async context =>
-    {
-        context.HttpContext.Response.ContentType = MediaTypeNames.Text.Plain;
-        await context.HttpContext.Response.WriteAsync(
-            $"{context.HttpContext.Response.StatusCode} Error");
-    });
-    app.UseHsts();
-    app.UseHttpsRedirection();
-}
+    context.HttpContext.Response.ContentType = MediaTypeNames.Text.Plain;
+    await context.HttpContext.Response.WriteAsync(
+        $"{context.HttpContext.Response.StatusCode} Error");
+});
+
+app.UseHsts();
+app.UseHttpsRedirection();
 
 app.UseAuthentication();
 app.UseAuthorization();
