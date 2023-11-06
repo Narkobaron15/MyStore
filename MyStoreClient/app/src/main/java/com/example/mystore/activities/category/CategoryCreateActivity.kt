@@ -1,21 +1,14 @@
 package com.example.mystore.activities.category
 
 import android.app.Activity
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.Button
-import androidx.activity.result.contract.ActivityResultContracts
-import android.widget.Button
 import androidx.activity.result.contract.ActivityResultContracts
 import com.example.mystore.R
 import com.example.mystore.activities.BaseActivity
 import com.example.mystore.activities.MainActivity
-import com.example.mystore.models.category.CategoryCreateModel
-import com.example.mystore.models.category.CategoryModel
-import com.example.mystore.network.ApiClient
 import com.example.mystore.models.category.CategoryCreateModel
 import com.example.mystore.models.category.CategoryModel
 import com.example.mystore.network.ApiClient
@@ -56,7 +49,6 @@ class CategoryCreateActivity : BaseActivity() {
 
     fun sendBtnOnClick(contextView: View) {
         val name = catName.editText?.text.toString().trim()
-        val image = "" //catImage.editText?.text.toString().trim()
         val image = "" //catImage.editText?.text.toString().trim()
         val description = catDescription.editText?.text.toString().trim()
 

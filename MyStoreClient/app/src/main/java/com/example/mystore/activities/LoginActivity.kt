@@ -1,10 +1,9 @@
 package com.example.mystore.activities
 
-import SessionManager
+import com.example.mystore.sharedprefs.SessionManager
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.KeyEvent
 import android.view.View
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity

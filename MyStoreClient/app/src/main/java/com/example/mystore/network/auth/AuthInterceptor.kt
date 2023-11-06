@@ -1,6 +1,6 @@
 package com.example.mystore.network.auth
 
-import SessionManager
+import com.example.mystore.sharedprefs.SessionManager
 import com.example.mystore.application.HomeApplication
 import okhttp3.Interceptor
 import okhttp3.Response

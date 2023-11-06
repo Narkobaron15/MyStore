@@ -1,3 +1,5 @@
+package com.example.mystore.sharedprefs
+
 import android.content.Context
 import com.example.mystore.R
 
