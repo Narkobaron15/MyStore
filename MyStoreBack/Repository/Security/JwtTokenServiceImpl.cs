@@ -45,6 +45,7 @@ public class JwtTokenServiceImpl : IJwtTokenService
             ValidateLifetime = true,
             ValidateIssuerSigningKey = true,
             IssuerSigningKey = new SymmetricSecurityKey(key),
+            ValidIssuer = Configuration["JwtIssuer"],
             ClockSkew = TimeSpan.Zero
         };
 

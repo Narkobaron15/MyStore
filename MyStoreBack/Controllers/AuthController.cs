@@ -29,7 +29,6 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("register")]
-    // [Consumes("multipart/form-data", "image/jpg", "image/png", "image/gif")]
     public async Task<IActionResult> Register([FromForm] RegisterModel model)
     {
         try
@@ -44,7 +43,7 @@ public class AuthController : ControllerBase
     }
     
     [HttpPost("refresh")]
-    public async Task<IActionResult> Refresh(TokensModel tokens)
+    public async Task<IActionResult> Refresh([FromBody] TokensModel tokens)
     {
         try
         {

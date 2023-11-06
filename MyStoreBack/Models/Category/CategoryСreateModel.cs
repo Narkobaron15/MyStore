@@ -1,8 +1,14 @@
-﻿namespace MyStoreBack.Models.Category;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace MyStoreBack.Models.Category;
 
 public class CategoryCreateModel
 {
+    [StringLength(100), Required]
     public string Name { get; set; } = string.Empty;
-    public string Image { get; set; } = string.Empty;
+    
+    public IFormFile? Image { get; set; }
+
+    [StringLength(500), Required]
     public string Description { get; set; } = string.Empty;
 }
