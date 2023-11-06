@@ -119,8 +119,8 @@ Console.WriteLine(builder.Environment.EnvironmentName);
 if (!builder.Environment.IsDevelopment())
     builder.WebHost.ConfigureKestrel(s =>
     {
-        var certPem = File.ReadAllText("/home/ssl/fullchain.pem");
-        var keyPem = File.ReadAllText("/home/ssl/privkey.pem");
+        var certPem = File.ReadAllText("/etc/letsencrypt/live/narkobaron.ninja/fullchain.pem");
+        var keyPem = File.ReadAllText("/etc/letsencrypt/live/narkobaron.ninja/privkey.pem");
         var x509 = X509Certificate2.CreateFromPem(certPem, keyPem);
         
         s.ListenAnyIP(443, opts => opts.UseHttps(x509));

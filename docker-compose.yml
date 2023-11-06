@@ -26,7 +26,7 @@ services:
       - ASPNETCORE_ENVIRONMENT=Production
     volumes:
         - MyStoreImages:/app/Uploads
-        - /home/ssl/:/home/ssl/
+        - /etc/letsencrypt/:/etc/letsencrypt/
     restart: always
 
     
