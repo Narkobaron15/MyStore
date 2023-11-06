@@ -115,11 +115,12 @@ builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IPictureService, LocalPictureService>();
 
 // Configure https on production
+Console.WriteLine(builder.Environment.EnvironmentName);
 if (!builder.Environment.IsDevelopment())
     builder.WebHost.ConfigureKestrel(s =>
     {
-        var certPem = File.ReadAllText("/etc/letsencrypt/live/narkobaron.ninja/fullchain.pem");
-        var keyPem = File.ReadAllText("/etc/letsencrypt/live/narkobaron.ninja/privkey.pem");
+        var certPem = File.ReadAllText("/app/SslCert/fullchain.pem");
+        var keyPem = File.ReadAllText("/app/SslCert/privkey.pem");
         var x509 = X509Certificate2.CreateFromPem(certPem, keyPem);
         
         s.ListenAnyIP(443, opts => opts.UseHttps(x509));
