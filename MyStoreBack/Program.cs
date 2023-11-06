@@ -119,8 +119,8 @@ Console.WriteLine(builder.Environment.EnvironmentName);
 if (!builder.Environment.IsDevelopment())
     builder.WebHost.ConfigureKestrel(s =>
     {
-        var certPem = File.ReadAllText("/app/SslCert/fullchain.pem");
-        var keyPem = File.ReadAllText("/app/SslCert/privkey.pem");
+        var certPem = File.ReadAllText("/home/ssl/fullchain.pem");
+        var keyPem = File.ReadAllText("/home/ssl/privkey.pem");
         var x509 = X509Certificate2.CreateFromPem(certPem, keyPem);
         
         s.ListenAnyIP(443, opts => opts.UseHttps(x509));

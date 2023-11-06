@@ -26,8 +26,10 @@ services:
       - ASPNETCORE_ENVIRONMENT=Production
     volumes:
         - MyStoreImages:/app/Uploads
-        - /etc/letsencrypt/live/narkobaron.ninja/:/app/SslCert
+        - /home/ssl/:/home/ssl/
     restart: always
+
+    
 
 volumes:
   database:
