@@ -1,5 +1,5 @@
-using System.Net;
 using System.Net.Mime;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -9,6 +9,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using MyStoreBack.Business_logic.Authentication;
 using MyStoreBack.Business_logic.Category;
+using MyStoreBack.Business_logic.Files;
 using MyStoreBack.Data.Context;
 using MyStoreBack.Data.Entity.Identity;
 using MyStoreBack.Data.Seeder;
@@ -33,9 +34,22 @@ builder.Services.AddSwaggerGen(c => {
             Name = "Authorization",
             Type = SecuritySchemeType.ApiKey
         });
+    
     c.AddSecurityRequirement(new OpenApiSecurityRequirement
     {
-        { new OpenApiSecurityScheme { Name = "Bearer" }, new List<string>() }
+        {
+            new OpenApiSecurityScheme
+            {
+                Name = "Bearer",
+                In = ParameterLocation.Header,
+                Reference = new OpenApiReference
+                {
+                    Id = "Bearer",
+                    Type = ReferenceType.SecurityScheme
+                }
+            },
+            new List<string>()
+        }
     });
 });
 
@@ -44,11 +58,8 @@ builder.Services.AddCors();
 builder.Services.AddAutoMapper(typeof(MapperProfile));
 
 // Database context
-builder.Services.AddDbContext<StoreDbContext>(opts =>
-{
-    var conStr = builder.Configuration.GetConnectionString("WebStoreConnection");
-    opts.UseNpgsql(conStr);
-});
+var conStr = builder.Configuration.GetConnectionString("WebStoreConnection");
+builder.Services.AddDbContext<StoreDbContext>(opts =>opts.UseNpgsql(conStr));
 
 // Identity configurations
 builder.Services.AddIdentity<UserEntity, RoleEntity>(opts =>
@@ -101,6 +112,18 @@ builder.Services.AddScoped<ITokenRepository, TokenRepository>();
 // Other services injection
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddScoped<IPictureService, LocalPictureService>();
+
+// Configure https on production
+if (!builder.Environment.IsDevelopment())
+    builder.WebHost.ConfigureKestrel(s =>
+    {
+        var certPem = File.ReadAllText("/etc/letsencrypt/live/narkobaron.ninja/fullchain.pem");
+        var keyPem = File.ReadAllText("/etc/letsencrypt/live/narkobaron.ninja/privkey.pem");
+        var x509 = X509Certificate2.CreateFromPem(certPem, keyPem);
+        
+        s.ListenAnyIP(443, opts => opts.UseHttps(x509));
+    });
 
 var app = builder.Build();
 
@@ -115,10 +138,12 @@ await app.SeedDatabase();
 var path = Path.Combine(Directory.GetCurrentDirectory(), "Uploads");
 if (!Directory.Exists(path)) Directory.CreateDirectory(path);
 
+Console.WriteLine($"Uploads directory: {path}");
+
 app.UseStaticFiles(new StaticFileOptions
 {
     FileProvider = new PhysicalFileProvider(path),
-    RequestPath = "/api/uploads",
+    RequestPath = "/uploads",
 });
 
 // Configure the HTTP request pipeline.

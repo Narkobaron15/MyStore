@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
+using MyStoreBack.Business_logic.Files;
 using MyStoreBack.Constants;
 using MyStoreBack.Data.Entity.Identity;
 using MyStoreBack.Models.Identity;
@@ -14,17 +15,20 @@ public class AuthService : IAuthService
     private readonly IJwtTokenService _tokenService;
     private readonly ITokenRepository _tokenRepository;
     private readonly UserManager<UserEntity> _userManager;
+    private readonly IPictureService _pictureService;
     private readonly IMapper _mapper;
 
     public AuthService(
         IJwtTokenService tokenService, 
         ITokenRepository tokenRepository,
         UserManager<UserEntity> userManager, 
+        IPictureService pictureService,
         IMapper mapper)
     {
         _tokenService = tokenService;
         _tokenRepository = tokenRepository;
         _userManager = userManager;
+        _pictureService = pictureService;
         _mapper = mapper;
     }
 
@@ -53,7 +57,11 @@ public class AuthService : IAuthService
     public async Task Register(RegisterModel model)
     {
         var userEntity = _mapper.Map<UserEntity>(model);
-        // image here
+        
+        // image processing
+        var pictureUrl = await _pictureService.Save(model.Image);
+        userEntity.Image = pictureUrl;
+        
         var result = await _userManager.CreateAsync(userEntity, model.Password);
 
         if (result.Errors.Any())

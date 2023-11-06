@@ -14,6 +14,5 @@ public class RegisterModel
     public string FirstName { get; set; } = String.Empty;
     [StringLength(100), Required]
     public string LastName { get; set; } = String.Empty;
-    // [StringLength(300)]
     public IFormFile? Image { get; set; }
 }

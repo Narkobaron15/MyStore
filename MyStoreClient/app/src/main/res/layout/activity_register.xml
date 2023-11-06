@@ -7,7 +7,7 @@
     android:paddingHorizontal="30dp"
     tools:context=".activities.RegisterActivity">
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         app:layout_constraintTop_toTopOf="parent"
         android:id="@+id/register_title"
         android:layout_width="match_parent"
@@ -137,7 +137,7 @@
         android:layout_height="wrap_content">
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/loginBtn"
+            android:id="@+id/registerBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"

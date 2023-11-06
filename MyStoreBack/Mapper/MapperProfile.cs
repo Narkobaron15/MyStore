@@ -16,8 +16,14 @@ public class MapperProfile : Profile
         CreateMap<CategoryModel, CategoryEntity>()
             .ForMember(x => x.ImageUrl, opt => opt.MapFrom(src => src.Image));
 
-        CreateMap<CategoryCreateModel, CategoryEntity>();
-        CreateMap<CategoryUpdateModel, CategoryEntity>();
+        CreateMap<CategoryCreateModel, CategoryEntity>().ForMember(
+            x => x.ImageUrl,
+            opt => opt.Ignore()
+        );
+        CreateMap<CategoryUpdateModel, CategoryEntity>().ForMember(
+            x => x.ImageUrl,
+            opt => opt.Ignore()
+        );
 
         CreateMap<RegisterModel, UserEntity>().ForMember(
             x => x.Image,

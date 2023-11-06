@@ -14,7 +14,7 @@ import retrofit2.http.PartMap
 
 interface ApiAuthQueries {
     @POST("/auth/login")
-    fun login(model: LoginModel): Call<TokensModel>
+    fun login(@Body model: LoginModel): Call<TokensModel>
 
     @POST("/auth/refresh")
     fun refresh(@Body model: TokensModel): Call<TokensModel>

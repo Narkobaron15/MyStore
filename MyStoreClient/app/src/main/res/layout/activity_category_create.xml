@@ -39,7 +39,6 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/descriptionField"
-            android:id="@+id/descriptionField"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingHorizontal="10dp"
@@ -63,14 +62,26 @@
             android:layout_width="match_parent"
             android:layout_marginTop="10dp"
             android:layout_height="wrap_content">
+<!--            Place picture drawer here-->
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/ivSelectImage"
+                app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.MyApp.RoundedImageView"
+                android:layout_width="80dp"
+                android:layout_height="100dp"
+                android:scaleType="fitCenter"
+                android:layout_marginStart="20dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:src="@drawable/baseline_image_70"/>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/imageBtn"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:layout_marginStart="100dp"
+                android:layout_centerVertical="true"
                 android:onClick="imgBtnOnClick"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="20dp"
                 android:text="@string/labelImage" />
         </RelativeLayout>
 
@@ -87,18 +98,7 @@
                 android:onClick="sendBtnOnClick"
                 android:paddingHorizontal="5dp"
                 android:text="@string/add"
-                android:textSize="14sp" />
-            app:layout_constraintTop_toBottomOf="@id/RelativeLayout01"
-            app:layout_constraintStart_toStartOf="parent" >
-
-            <com.google.android.material.button.MaterialButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:onClick="sendBtnOnClick"
-                android:paddingHorizontal="5dp"
-                android:text="@string/add"
-                android:textSize="14sp" />
+                android:textSize="14sp"/>
         </RelativeLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

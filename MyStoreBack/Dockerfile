@@ -1,5 +1,6 @@
 ﻿FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS base
 WORKDIR /app
+COPY ["./Uploads/", "./Uploads/"]
 EXPOSE 80 
 EXPOSE 443
 
