@@ -19,6 +19,10 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.mystore.R
 import com.example.mystore.activities.category.CategoryCreateActivity
 import com.google.android.material.snackbar.Snackbar
+import okhttp3.MediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import java.io.File
 
 
 open class BaseActivity : AppCompatActivity() {
@@ -61,6 +65,17 @@ open class BaseActivity : AppCompatActivity() {
             return filePath
         }
         return null
+    }
+    protected fun getPicFormDataFromPath(path: String?) : MultipartBody.Part? {
+        var data: MultipartBody.Part? = null
+
+        if (path != null) {
+            val file = File(path)
+            val img = RequestBody.create(MediaType.get("image/*"), file)
+            data = MultipartBody.Part.createFormData("image", file.name, img)
+        }
+
+        return data
     }
 
     // Register an activity launcher for Wi-Fi menu

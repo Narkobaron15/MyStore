@@ -2,7 +2,6 @@ package com.example.mystore.activities.category
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
@@ -17,13 +16,9 @@ import com.google.android.material.imageview.ShapeableImageView
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
 import com.squareup.picasso.Picasso
-import okhttp3.MediaType
-import okhttp3.MultipartBody
-import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.io.File
 
 class CategoryCreateActivity : BaseActivity() {
     private var catImage: String? = null
@@ -40,7 +35,7 @@ class CategoryCreateActivity : BaseActivity() {
 
         catName = findViewById(R.id.nameField)
         catDescription = findViewById(R.id.descriptionField)
-        imagePickBtn = findViewById(R.id.imageBtn)
+        imagePickBtn = findViewById(R.id.addImageBtn)
         addBtn = findViewById(R.id.addBtn)
         imgView = findViewById(R.id.ivSelectImage)
 
@@ -66,13 +61,7 @@ class CategoryCreateActivity : BaseActivity() {
     }
 
     private fun addBtnOnClick(contextView: View) {
-        var data: MultipartBody.Part? = null
-        if (catImage != null) {
-            val file = File(catImage.toString())
-            val img = RequestBody.create(MediaType.get("image/*"), file)
-            data = MultipartBody.Part.createFormData("image", file!!.name, img)
-        }
-
+        val formData = getPicFormDataFromPath(catImage)
         val model = CategoryCreateModel(
             name = catName.editText?.text.toString().trim(),
             description = catDescription.editText?.text.toString().trim(),
@@ -85,7 +74,7 @@ class CategoryCreateActivity : BaseActivity() {
             return
         }
 
-        ApiClient.categoryService.createCategory(model.toMap(), data)
+        ApiClient.categoryService.createCategory(model.toMap(), formData)
             .enqueue(object: Callback<CategoryModel> {
             override fun onResponse(
                 call: Call<CategoryModel>,

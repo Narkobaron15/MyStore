@@ -3,8 +3,11 @@ package com.example.mystore.activities.category
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.View
+import android.widget.Button
+import android.widget.ImageView
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import com.example.mystore.R
 import com.example.mystore.activities.BaseActivity
 import com.example.mystore.activities.MainActivity
@@ -13,24 +16,30 @@ import com.example.mystore.models.category.CategoryUpdateModel
 import com.example.mystore.network.ApiClient
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
+import com.squareup.picasso.Picasso
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class CategoryUpdateActivity : BaseActivity() {
     private lateinit var catName: TextInputLayout
-    private lateinit var catImage: TextInputLayout
+    private lateinit var catImageView: ImageView
     private lateinit var catDescription: TextInputLayout
+    private lateinit var updateBtn: Button
+    private lateinit var imagePickBtn: Button
 
     private lateinit var cat : CategoryModel
+    private var catImage: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_category_update)
 
         catName = findViewById(R.id.nameField)
-        catImage = findViewById(R.id.imageField)
+        catImageView = findViewById(R.id.updateImage)
         catDescription = findViewById(R.id.descriptionField)
+        updateBtn = findViewById(R.id.updateBtn)
+        imagePickBtn = findViewById(R.id.addImageBtn)
 
         val bundle = intent.extras
         if (bundle != null) {
@@ -38,15 +47,33 @@ class CategoryUpdateActivity : BaseActivity() {
                     bundle.getSerializable("model", CategoryModel::class.java)!!
                   else bundle.getSerializable("model") as CategoryModel
 
+            Picasso.get().load(cat.image.toString()).into(catImageView)
             catName.editText?.setText(cat.name)
-            catImage.editText?.setText(cat.image)
             catDescription.editText?.setText(cat.description)
         }
 
+        imagePickBtn.setOnClickListener { _ ->
+            pickMedia.launch(PickVisualMediaRequest())
+        }
+
+        updateBtn.setOnClickListener(::updateBtnOnClick)
         listenToConnectionStatusWithDefaultCallback()
     }
 
-    fun putBtnOnClick(contextView: View) {
+    // Receiver
+    private val pickMedia = registerForActivityResult(
+        ActivityResultContracts.PickVisualMedia()
+    ) {
+        if (it == null) {
+            return@registerForActivityResult
+        }
+
+        catImage = getPathFromURI(it)
+        Picasso.get().load(it).into(catImageView)
+    }
+
+    private fun updateBtnOnClick(contextView: View) {
+        val formData = getPicFormDataFromPath(catImage)
         val model = CategoryUpdateModel(
             cat.id,
             catName.editText?.text.toString().trim(),
@@ -60,7 +87,7 @@ class CategoryUpdateActivity : BaseActivity() {
             return
         }
 
-        ApiClient.categoryService.updateCategory(model.toMap(), null)
+        ApiClient.categoryService.updateCategory(model.toMap(), formData)
             .enqueue(object: Callback<CategoryModel> {
             override fun onResponse(
                 call: Call<CategoryModel>,

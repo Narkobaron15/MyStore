@@ -15,13 +15,9 @@ import com.example.mystore.network.ApiClient
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
 import com.squareup.picasso.Picasso
-import okhttp3.MediaType
-import okhttp3.MultipartBody
-import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.io.File
 
 class RegisterActivity : BaseActivity() {
     private var userImage: String? = null
@@ -71,13 +67,7 @@ class RegisterActivity : BaseActivity() {
 
     // Maybe needs to be redacted
     private fun onRegisterBtnClicked(contextView: View) {
-        var data: MultipartBody.Part? = null
-        if (userImage != null) {
-            val file = File(userImage.toString())
-            val img = RequestBody.create(MediaType.get("image/*"), file)
-            data = MultipartBody.Part.createFormData("image", file.name, img)
-        }
-
+        val formData = getPicFormDataFromPath(userImage)
         val model = RegisterModel(
             email = emailField.editText?.text.toString(),
             userName = usernameField.editText?.text.toString(),
@@ -102,7 +92,7 @@ class RegisterActivity : BaseActivity() {
             return
         }
 
-        ApiClient.authService.register(model.toMap(), data).enqueue(
+        ApiClient.authService.register(model.toMap(), formData).enqueue(
             object : Callback<Unit> {
                 override fun onResponse(
                     call: Call<Unit>,
