@@ -34,8 +34,12 @@ public class LocalPictureService : IPictureService
 
     public void RemoveByUrl(string url)
     {
+        if (!url.StartsWith(ApiUrl))
+            return;
+        
         string imageName = url[ApiUrl.Length..],
             pathToFile = ImageInUploads(imageName);
+        
         
         if (pathToFile != ImageInUploads("default.png"))
             File.Delete(pathToFile);
