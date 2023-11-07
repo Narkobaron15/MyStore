@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingHorizontal="30dp"
-    tools:context=".activities.LoginActivity" android:layout_margin="10dp">
+    tools:context=".activities.auth.LoginActivity" android:layout_margin="10dp">
 
     <TextView
         app:layout_constraintTop_toTopOf="parent"
@@ -20,7 +20,7 @@
         android:text="@string/login_header"/>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/usernameField"
+        android:id="@+id/unameField"
         app:layout_constraintTop_toBottomOf="@id/register_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -42,8 +42,9 @@
         android:layout_height="wrap_content"
         android:hint="@string/labelPassword"
         app:errorEnabled="true"
+        app:passwordToggleEnabled="true"
         app:helperTextTextColor="@color/design_default_color_error"
-        app:layout_constraintTop_toBottomOf="@id/usernameField"
+        app:layout_constraintTop_toBottomOf="@id/unameField"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         tools:layout_editor_absoluteX="31dp">
         <com.google.android.material.textfield.TextInputEditText
@@ -54,11 +55,11 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <RelativeLayout
+        android:id="@+id/loginContainer"
         app:layout_constraintTop_toBottomOf="@id/passwordField"
         android:layout_marginTop="15dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
         <com.google.android.material.button.MaterialButton
             android:id="@+id/loginBtn"
             android:layout_width="wrap_content"
@@ -67,5 +68,34 @@
             android:text="@string/labelLogin" />
     </RelativeLayout>
 
-
+    <RelativeLayout
+        app:layout_constraintTop_toBottomOf="@id/loginContainer"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <RelativeLayout
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true">
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/newAccountPrompt"
+                android:textSize="16sp"
+                android:gravity="center"
+                android:text="@string/new_account_prompt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/registerTextView"
+                android:textColor="@color/hyperlink_blue"
+                android:layout_toEndOf="@id/newAccountPrompt"
+                android:textSize="16sp"
+                android:layout_marginStart="10dp"
+                android:text="@string/labelRegister"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </RelativeLayout>
+    </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

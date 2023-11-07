@@ -5,9 +5,11 @@ import android.content.Intent
 import android.net.ConnectivityManager
 import android.net.Network
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mystore.R
+import com.example.mystore.activities.auth.LoginActivity
 import com.example.mystore.activities.category.CategoryCreateActivity
 import com.example.mystore.adapters.CategoryAdapter
 import com.example.mystore.application.HomeApplication
@@ -21,7 +23,7 @@ import retrofit2.Response
 class MainActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_category_list)
+        setContentView(R.layout.activity_main)
 
         val sessionManager = SessionManager(HomeApplication.getAppContext())
         if (sessionManager.fetchAuthToken() == null) {
@@ -35,14 +37,11 @@ class MainActivity : BaseActivity() {
             object : ConnectivityManager.NetworkCallback() {
                 override fun onAvailable(network: Network) = fetchCategories(recyclerView)
                 override fun onLost(network: Network) = showNoInternetSnackbar()
-            })
+        })
     }
 
-    fun fabOnClick(contextView: View) {
-        Intent (this, CategoryCreateActivity::class.java).also {
-            startActivity(it)
-        }
-    }
+    fun fabOnClick(contextView: View)
+        = startActivity(Intent(this, CategoryCreateActivity::class.java))
 
     private fun fetchCategories(recyclerView: RecyclerView) {
         ApiClient.categoryService.getCategories()

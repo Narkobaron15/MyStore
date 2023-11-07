@@ -32,11 +32,11 @@ public class AuthService : IAuthService
         _mapper = mapper;
     }
 
-    private const string WrongEmailOrPwdMsg = "Email or password is incorrect.";
+    private const string WrongEmailOrPwdMsg = "Username or password is incorrect.";
 
     public async Task<TokensModel?> Login(LoginModel model)
     {
-        UserEntity user = await _userManager.FindByEmailAsync(model.Email);
+        UserEntity user = await _userManager.FindByNameAsync(model.Username);
         if (user is null) 
             throw new InvalidDataException(WrongEmailOrPwdMsg);
 

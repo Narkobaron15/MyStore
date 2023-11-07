@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.ConnectivityManager
 import android.net.ConnectivityManager.NetworkCallback
+import android.net.Network
 import android.net.NetworkCapabilities
 import android.net.NetworkRequest
 import android.net.Uri
@@ -88,6 +89,16 @@ open class BaseActivity : AppCompatActivity() {
         }.show()
     }
 
+    protected fun showBackOnlineSnackbar() {
+        val contextView = findViewById<View>(android.R.id.content).rootView
+
+        Snackbar.make(
+            contextView,
+            "Back online :)",
+            Snackbar.LENGTH_LONG
+        ).show()
+    }
+
     // Create a listener for network status
     protected fun listenToConnectionStatus(callback: NetworkCallback) {
         val networkRequest = NetworkRequest.Builder()
@@ -106,5 +117,12 @@ open class BaseActivity : AppCompatActivity() {
 
         if (connectivityManager.activeNetwork == null)
             showNoInternetSnackbar()
+    }
+
+    protected fun listenToConnectionStatusWithDefaultCallback() {
+        listenToConnectionStatus(
+            object : ConnectivityManager.NetworkCallback() {
+                override fun onLost(network: Network) = showNoInternetSnackbar()
+            })
     }
 }

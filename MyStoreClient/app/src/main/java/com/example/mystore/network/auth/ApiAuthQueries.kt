@@ -22,7 +22,7 @@ interface ApiAuthQueries {
     @Multipart
     @POST("/auth/register")
     fun register(
-        @Part image: MultipartBody.Part,
-        @PartMap model: MutableMap<String, RequestBody>
+        @PartMap model: MutableMap<String, RequestBody>,
+        @Part image: MultipartBody.Part? = null
     ): Call<Unit>
 }

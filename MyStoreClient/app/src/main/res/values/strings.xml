@@ -31,4 +31,5 @@
     <string name="labelFirstName">First name</string>
     <string name="labelLastName">Last name</string>
     <string name="labelRegister">Register</string>
+    <string name="new_account_prompt">Don\'t have an account?</string>
 </resources>

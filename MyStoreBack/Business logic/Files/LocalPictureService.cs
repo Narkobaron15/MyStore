@@ -2,7 +2,7 @@ namespace MyStoreBack.Business_logic.Files;
 
 public class LocalPictureService : IPictureService
 {
-    private const string ApiUrl = "http://narkobaron.ninja/uploads/";
+    private const string ApiUrl = "https://narkobaron.ninja/uploads/";
     private const string Ext = ".webp";
     
     // https://github.com/SixLabors/ImageSharp

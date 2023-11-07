@@ -1,5 +1,6 @@
 package com.example.mystore.models.user
 
+import com.example.mystore.models.Helper.createPartFromString
 import okhttp3.MediaType
 import okhttp3.RequestBody
 
@@ -10,17 +11,11 @@ data class RegisterModel(
     var firstName: String = "",
     var lastName: String = "",
 ) {
-    fun toMap(): MutableMap<String, RequestBody> {
-        val map = mutableMapOf<String, RequestBody>()
-        map["Email"] = createPartFromString(email)
-        map["UserName"] = createPartFromString(userName)
-        map["Password"] = createPartFromString(password)
-        map["FirstName"] = createPartFromString(firstName)
-        map["LastName"] = createPartFromString(lastName)
-        return map
-    }
-
-    private fun createPartFromString(str: String): RequestBody {
-        return RequestBody.create(MediaType.get("text/plain"), str)
-    }
+    fun toMap(): MutableMap<String, RequestBody> = mutableMapOf(
+        "email" to createPartFromString(email),
+        "userName" to createPartFromString(userName),
+        "password" to createPartFromString(password),
+        "firstName" to createPartFromString(firstName),
+        "lastName" to createPartFromString(lastName),
+    )
 }

@@ -59,6 +59,7 @@ builder.Services.AddAutoMapper(typeof(MapperProfile));
 
 // Database context
 var conStr = builder.Configuration.GetConnectionString("WebStoreConnection");
+Console.WriteLine(conStr);
 builder.Services.AddDbContext<StoreDbContext>(opts =>opts.UseNpgsql(conStr));
 
 // Identity configurations
@@ -115,12 +116,12 @@ builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IPictureService, LocalPictureService>();
 
 // Configure https on production
-Console.WriteLine(builder.Environment.EnvironmentName);
 if (!builder.Environment.IsDevelopment())
     builder.WebHost.ConfigureKestrel(s =>
     {
-        var certPem = File.ReadAllText("/etc/letsencrypt/live/narkobaron.ninja/fullchain.pem");
-        var keyPem = File.ReadAllText("/etc/letsencrypt/live/narkobaron.ninja/privkey.pem");
+        string certPath = builder.Configuration["CertPath"];
+        var certPem = File.ReadAllText(Path.Combine(certPath, "fullchain.pem"));
+        var keyPem = File.ReadAllText(Path.Combine(certPath, "privkey.pem"));
         var x509 = X509Certificate2.CreateFromPem(certPem, keyPem);
         
         s.ListenAnyIP(443, opts => opts.UseHttps(x509));
@@ -138,8 +139,6 @@ await app.SeedDatabase();
 
 var path = Path.Combine(Directory.GetCurrentDirectory(), "Uploads");
 if (!Directory.Exists(path)) Directory.CreateDirectory(path);
-
-Console.WriteLine($"Uploads directory: {path}");
 
 app.UseStaticFiles(new StaticFileOptions
 {

@@ -6,10 +6,10 @@ namespace MyStoreBack.Models.Identity;
 public class LoginModel
 {
     /// <summary>
-    /// Email of the user.
+    /// Username of the user.
     /// </summary>
     /// <example>example@example.com</example>
-    public string Email { get; set; } = String.Empty;
+    public string Username { get; set; } = String.Empty;
     /// <summary>
     /// Password of the user.
     /// </summary>

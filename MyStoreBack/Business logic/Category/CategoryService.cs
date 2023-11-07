@@ -71,9 +71,11 @@ public class CategoryService : ICategoryService
             Mapper.Map(model, cat);
             
             // Unlinking files and saving a new picture
-            _pictureService.RemoveByUrl(cat.ImageUrl);
-            string newImageUrl = await _pictureService.Save(model.Image);
-            cat.ImageUrl = newImageUrl;
+            if (model.Image is not null) {
+                _pictureService.RemoveByUrl(cat.ImageUrl);
+                string newImageUrl = await _pictureService.Save(model.Image);
+                cat.ImageUrl = newImageUrl;
+            }
 
             Context.Update(cat);
             await Context.SaveChangesAsync();

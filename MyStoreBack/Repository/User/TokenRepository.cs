@@ -44,7 +44,7 @@ public class TokenRepository : ITokenRepository
 	
     public async Task<bool> IsValidUserAsync(LoginModel user)
     {
-        var u = _userManager.Users.FirstOrDefault(o => o.UserName == user.Email);
+        var u = _userManager.Users.FirstOrDefault(o => o.UserName == user.Username);
         return u is not null 
                && await _userManager.CheckPasswordAsync(u, user.Password);
     }

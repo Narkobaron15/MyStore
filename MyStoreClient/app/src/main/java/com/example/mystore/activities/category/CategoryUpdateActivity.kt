@@ -34,22 +34,22 @@ class CategoryUpdateActivity : BaseActivity() {
 
         val bundle = intent.extras
         if (bundle != null) {
-            cat =
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
+            cat = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
                     bundle.getSerializable("model", CategoryModel::class.java)!!
-                else bundle.getSerializable("model") as CategoryModel
+                  else bundle.getSerializable("model") as CategoryModel
 
             catName.editText?.setText(cat.name)
             catImage.editText?.setText(cat.image)
             catDescription.editText?.setText(cat.description)
         }
+
+        listenToConnectionStatusWithDefaultCallback()
     }
 
     fun putBtnOnClick(contextView: View) {
         val model = CategoryUpdateModel(
             cat.id,
             catName.editText?.text.toString().trim(),
-            catImage.editText?.text.toString().trim(),
             catDescription.editText?.text.toString().trim()
         )
 
@@ -60,13 +60,12 @@ class CategoryUpdateActivity : BaseActivity() {
             return
         }
 
-        ApiClient.categoryService.updateCategory(model)
+        ApiClient.categoryService.updateCategory(model.toMap(), null)
             .enqueue(object: Callback<CategoryModel> {
             override fun onResponse(
                 call: Call<CategoryModel>,
                 response: Response<CategoryModel>
             ) {
-                Log.w("CategoryUpdateActivity", response.message())
                 if (!response.isSuccessful) return
 
                 val intent = Intent(
@@ -77,7 +76,6 @@ class CategoryUpdateActivity : BaseActivity() {
             }
 
             override fun onFailure(call: Call<CategoryModel>, t: Throwable) {
-                Log.e("CategoryUpdateActivity", t.message.toString())
                 Snackbar.make(
                     contextView,
                     "Something went wrong",
