@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doOnTextChanged
 import com.example.mystore.R
 import com.example.mystore.activities.BaseActivity
@@ -22,8 +23,9 @@ import retrofit2.Response
 
 // https://medium.com/android-news/token-authorization-with-retrofit-android-oauth-2-0-747995c79720
 
-class LoginActivity : BaseActivity() {
+class LoginActivity : AppCompatActivity() {
     private val errorMessage = "Invalid credentials"
+    private val sessionManager = SessionManager(HomeApplication.getAppContext())
 
     private lateinit var usernameField : TextInputLayout
     private lateinit var pwdField : TextInputLayout
@@ -52,7 +54,7 @@ class LoginActivity : BaseActivity() {
             startActivity(Intent(this, RegisterActivity::class.java))
         }
 
-        listenToConnectionStatusWithDefaultCallback()
+//        listenToConnectionStatusWithDefaultCallback()
     }
 
     private fun login(view: View) {
