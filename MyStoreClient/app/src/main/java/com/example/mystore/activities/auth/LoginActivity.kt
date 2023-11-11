@@ -23,7 +23,6 @@ import retrofit2.Response
 // https://medium.com/android-news/token-authorization-with-retrofit-android-oauth-2-0-747995c79720
 
 class LoginActivity : BaseActivity() {
-    private val sessionManager = SessionManager(HomeApplication.getAppContext())
     private val errorMessage = "Invalid credentials"
 
     private lateinit var usernameField : TextInputLayout

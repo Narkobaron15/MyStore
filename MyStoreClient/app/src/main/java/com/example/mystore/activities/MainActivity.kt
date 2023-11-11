@@ -53,6 +53,8 @@ class MainActivity : BaseActivity() {
                     response: Response<MutableList<CategoryModel>>
                 ) {
                     val categories = response.body() ?: listOf()
+                    Log.w("CATEGORIES", response.body().toString())
+                    Log.d("CATEGORIES", categories.toString())
                     recyclerView.adapter = CategoryAdapter(categories)
                 }
 
@@ -94,8 +96,5 @@ class MainActivity : BaseActivity() {
                     Log.e("REFRESH TOKEN", t.message.toString())
                 }
             })
-
-        sessionManager.clearTokens()
-
     }
 }
