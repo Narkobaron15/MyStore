@@ -1,5 +1,5 @@
 bin/
 obj/
 .idea/
-/database/
-/Secrets
+Uploads/
+!/Uploads/default.png

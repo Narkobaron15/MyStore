@@ -23,6 +23,11 @@ class SessionManager (context: Context) {
     fun saveRefreshToken(token: String) = editPrefs(REFRESH_TOKEN, token)
     fun fetchRefreshToken(): String? = prefs.getString(REFRESH_TOKEN, null)
 
+    fun clearTokens() {
+        editPrefs(USER_TOKEN, "")
+        editPrefs(REFRESH_TOKEN, "")
+    }
+
     private fun editPrefs(key: String, value: String) {
         val editor = prefs.edit()
         editor.putString(key, value)

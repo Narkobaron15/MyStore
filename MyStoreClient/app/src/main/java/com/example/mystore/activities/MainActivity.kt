@@ -14,6 +14,7 @@ import com.example.mystore.activities.category.CategoryCreateActivity
 import com.example.mystore.adapters.CategoryAdapter
 import com.example.mystore.application.HomeApplication
 import com.example.mystore.models.category.CategoryModel
+import com.example.mystore.models.user.TokensModel
 import com.example.mystore.network.ApiClient
 import retrofit2.Call
 import retrofit2.Callback
@@ -25,12 +26,13 @@ class MainActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val sessionManager = SessionManager(HomeApplication.getAppContext())
         if (sessionManager.fetchAuthToken() == null) {
             Intent(this, LoginActivity::class.java).also {
                 startActivity(it)
             }
         }
+
+        refreshTokens()
 
         val recyclerView: RecyclerView = findViewById(R.id.recycler)
         listenToConnectionStatus(
@@ -60,5 +62,40 @@ class MainActivity : BaseActivity() {
                     showNoInternetSnackbar()
                 }
             })
+    }
+
+    private fun refreshTokens() {
+        if (sessionManager.fetchRefreshToken() == null) {
+            return
+        }
+
+        val tokens = TokensModel(
+            sessionManager.fetchAuthToken()!!,
+            sessionManager.fetchRefreshToken()!!
+        )
+
+        ApiClient.authService.refresh(tokens)
+            .enqueue(object : Callback<TokensModel> {
+                override fun onResponse(
+                    call: Call<TokensModel>,
+                    response: Response<TokensModel>
+                ) {
+                    if (response.isSuccessful) {
+                        val tokens = response.body()
+
+                        sessionManager.saveAuthToken(tokens!!.accessToken!!)
+                        sessionManager.saveRefreshToken(tokens.refreshToken!!)
+                    } else {
+                        onFailure(call, Throwable(response.message()))
+                    }
+                }
+
+                override fun onFailure(call: Call<TokensModel>, t: Throwable) {
+                    Log.e("REFRESH TOKEN", t.message.toString())
+                }
+            })
+
+        sessionManager.clearTokens()
+
     }
 }

@@ -18,6 +18,8 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.example.mystore.R
 import com.example.mystore.activities.category.CategoryCreateActivity
+import com.example.mystore.application.HomeApplication
+import com.example.mystore.sharedprefs.SessionManager
 import com.google.android.material.snackbar.Snackbar
 import okhttp3.MediaType
 import okhttp3.MultipartBody
@@ -26,6 +28,7 @@ import java.io.File
 
 
 open class BaseActivity : AppCompatActivity() {
+    protected val sessionManager = SessionManager(HomeApplication.getAppContext())
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
         return true
@@ -39,6 +42,11 @@ open class BaseActivity : AppCompatActivity() {
             }
             R.id.action_create -> {
                 startActivity(Intent(this, CategoryCreateActivity::class.java))
+                true
+            }
+            R.id.action_logout -> {
+                sessionManager.clearTokens()
+                startActivity(Intent(this, MainActivity::class.java))
                 true
             }
             else -> {

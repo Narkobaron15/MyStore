@@ -3,16 +3,11 @@ namespace MyStoreBack.Business_logic.Files;
 public class LocalPictureService : IPictureService
 {
     private const string ApiUrl = "https://narkobaron.ninja/uploads/";
-    private const string Ext = ".webp";
-    
+    private const string WebpExt = ".webp";
+
     // https://github.com/SixLabors/ImageSharp
-    public async Task<string> Save(IFormFile? file)
+    private static async Task<string> Save(Stream stream)
     {
-        if (file is null)
-            return ApiUrl + "default.png";
-        
-        // Resize image
-        await using var stream = file.OpenReadStream();
         using var image = await Image.LoadAsync(stream);
         
         var resizeOpts = new ResizeOptions
@@ -22,7 +17,7 @@ public class LocalPictureService : IPictureService
         };
         image.Mutate(cnt => cnt.Resize(resizeOpts));
 
-        string imageName = Path.GetRandomFileName()[..^4] + Ext,
+        string imageName = Path.GetRandomFileName()[..^4] + WebpExt,
             dirSaveImage = ImageInUploads(imageName);
 
         // await using uses IAsyncDisposable instead of IDisposable
@@ -30,6 +25,23 @@ public class LocalPictureService : IPictureService
         await image.SaveAsWebpAsync(fileStream);
 
         return ApiUrl + imageName;
+    }
+    
+    public async Task<string> Save(IFormFile? file)
+    {
+        if (file is null)
+            return ApiUrl + "default.png";
+        
+        // Resize image
+        await using var stream = file.OpenReadStream();
+        return await Save(stream);
+    }
+
+    public async Task<string> Save(Uri uri)
+    {
+        using HttpClient client = new();
+        var stream = await client.GetStreamAsync(uri);
+        return await Save(stream);
     }
 
     public void RemoveByUrl(string url)
@@ -39,7 +51,6 @@ public class LocalPictureService : IPictureService
         
         string imageName = url[ApiUrl.Length..],
             pathToFile = ImageInUploads(imageName);
-        
         
         if (pathToFile != ImageInUploads("default.png"))
             File.Delete(pathToFile);

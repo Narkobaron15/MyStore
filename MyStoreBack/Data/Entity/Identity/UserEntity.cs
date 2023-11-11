@@ -14,4 +14,6 @@ public class UserEntity : IdentityUser<int>
     public string? Image { get; set; }
     
     public virtual ICollection<UserRoleEntity> UserRoles { get; set; } = new List<UserRoleEntity>();
+    
+    public virtual ICollection<CategoryEntity> Categories { get; set; } = new List<CategoryEntity>();
 }

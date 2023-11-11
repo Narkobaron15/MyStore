@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MyStoreBack.Business_logic.Category;
 using MyStoreBack.Models.Category;
@@ -18,21 +19,39 @@ public class CategoriesController : ControllerBase
     public async Task<IActionResult> Get()
         // It would be great to make ranged response here
     {
-        var cats = await Service.GetAll();
-        return Ok(cats);
+        try
+        {
+            var cats = await Service.GetAll(User);
+            return Ok(cats);
+        }
+        catch (UnauthorizedAccessException ex)
+        {
+            return Unauthorized(new { message = ex.Message });
+        }
     }
 
     [HttpGet("{id:int}")]
     public async Task<IActionResult> GetById([FromRoute] int id)
     {
-        CategoryModel cat = await Service.GetById(id);
-        return Ok(cat);
+        try
+        {
+            CategoryModel cat = await Service.GetById(id, User);
+            return Ok(cat);
+        }
+        catch (UnauthorizedAccessException ex)
+        {
+            return Unauthorized(new { message = ex.Message });
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(new { message = ex.Message });
+        }
     }
     
     [HttpPost("create")]
     public async Task<IActionResult> Create([FromForm] CategoryCreateModel model)
     {
-        CategoryModel? cat = await Service.Create(model);
+        CategoryModel? cat = await Service.Create(model, User);
         return cat is not null
             ? Ok(cat)
             : BadRequest(new { message = "Failed to create category." });
@@ -41,7 +60,7 @@ public class CategoriesController : ControllerBase
     [HttpPut("update")]
     public async Task<IActionResult> Update([FromForm] CategoryUpdateModel model)
     {
-        CategoryModel? updated = await Service.Update(model);
+        CategoryModel? updated = await Service.Update(model, User);
         return updated is not null
             ? Ok(updated)
             : BadRequest(new { message = "Failed to update category." });
@@ -50,7 +69,9 @@ public class CategoriesController : ControllerBase
     [HttpDelete("delete/{id:int}")]
     public async Task<IActionResult> Delete([FromRoute] int id)
     {
-        bool result = await Service.Delete(id);
-        return result ? Ok() : BadRequest(new { message = "Failed to delete category."});
+        bool result = await Service.Delete(id, User);
+        return result 
+            ? Ok() 
+            : BadRequest(new { message = "Failed to delete category."});
     }
 }

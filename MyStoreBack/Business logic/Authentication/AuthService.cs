@@ -63,7 +63,7 @@ public class AuthService : IAuthService
         userEntity.Image = pictureUrl;
         
         var result = await _userManager.CreateAsync(userEntity, model.Password);
-
+        
         if (result.Errors.Any())
         {
             var errors = result.Errors.Select(e => e.Description);

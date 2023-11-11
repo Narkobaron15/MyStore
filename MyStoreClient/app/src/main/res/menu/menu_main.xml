@@ -3,11 +3,16 @@
     <item
         android:id="@+id/action_home"
         android:orderInCategory="100"
-        android:title="Home"
+        android:title="@string/home"
         app:showAsAction="never" />
     <item
         android:id="@+id/action_create"
         android:orderInCategory="100"
-        android:title="Create"
+        android:title="@string/create"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_logout"
+        android:orderInCategory="100"
+        android:title="@string/logout"
         app:showAsAction="never" />
 </menu>
